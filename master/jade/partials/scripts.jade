@@ -1,0 +1,94 @@
+// Main vendor Scripts
+script(src='vendor/jquery/dist/jquery.min.js')
+script(src='vendor/bootstrap/dist/js/bootstrap.min.js')
+// Plugins
+script(src='vendor/chosen/chosen.jquery.js')
+script(src='vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js')
+script(src='vendor/bootstrap-filestyle/src/bootstrap-filestyle.min.js')
+// Animo
+script(src='vendor/animo.js/animo.min.js')
+// Sparklines
+script(src='vendor/sparkline/index.js')
+// Slimscroll
+script(src='vendor/slimScroll/jquery.slimscroll.min.js')
+// Store + JSON
+script(src='vendor/store-js/store%2Bjson2.min.js')
+// ScreenFull
+script(src='vendor/screenfull/dist/screenfull.min.js')
+
+// START Page Custom Script
+
+//- jQuery UI for Portlets and Calendar
+if (firstMenu['Elements']['S']['Portlets']['active'] || secondMenu['Extras']['S']['Calendar']['active'])
+  // jQuery UI
+  script(src='vendor/jquery-ui/jquery-ui.min.js')
+  script(src='vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js')
+
+if (secondMenu['Extras']['S']['Calendar']['active'])
+  // MomentJs
+  script(src='vendor/moment/min/moment-with-locales.min.js')
+  // FulCalendar
+  script(src='vendor/fullcalendar/dist/fullcalendar.min.js')
+
+if (firstMenu['Forms']['S']['Extended']['active'])
+  // Markdown Area Codemirror and dependencies
+  script(src='vendor/codemirror/lib/codemirror.js')
+  script(src='vendor/codemirror/addon/mode/overlay.js')
+  script(src='vendor/codemirror/mode/markdown/markdown.js')
+  script(src='vendor/codemirror/mode/xml/xml.js')
+  script(src='vendor/codemirror/mode/gfm/gfm.js')
+  script(src='vendor/marked/lib/marked.js')
+
+if (firstMenu['Forms']['S']['Extended']['active'] || secondMenu['Extras']['S']['Search']['active'])
+  // MomentJs and Datepicker
+  script(src='vendor/moment/min/moment-with-locales.min.js')
+  script(src='vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
+  // Tags input
+  script(src='vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.js')
+  // Input Mask
+  script(src='vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')
+
+if (firstMenu['Forms']['S']['Wizard']['active'])
+  script(src='vendor/jquery.steps/build/jquery.steps.min.js')
+  script(src='vendor/jquery-validation/dist/jquery.validate.min.js')
+
+if (firstMenu['Tables']['S']['DataTables']['active'])
+  // Data Table Scripts
+  script(src='vendor/datatables/media/js/jquery.dataTables.min.js')
+  script(src='vendor/datatables/media/js/dataTables.bootstrap.min.js')
+  //- script(src='vendor/datatable/media/js/datatable-bootstrap/js/dataTables.bootstrapPagination.js')
+  script(src='vendor/datatables-colvis/js/dataTables.colVis.js')
+
+
+if (firstMenu['Forms']['S']['Validation']['active'] || firstMenu['Forms']['S']['Wizard']['active'])
+  // Form Validation
+  script(src='vendor/parsleyjs/dist/parsley.min.js')
+
+
+if (firstMenu['Charts']['S']['Flot']['active'] || firstMenu['Dashboard']['active'])
+  //  Flot Charts
+  script(src='vendor/flot/jquery.flot.js')
+  script(src='vendor/flot.tooltip/js/jquery.flot.tooltip.js')
+  script(src='vendor/flot/jquery.flot.resize.js')
+  script(src='vendor/flot/jquery.flot.pie.js')
+  script(src='vendor/flot/jquery.flot.time.js')
+  script(src='vendor/flot/jquery.flot.categories.js')
+  script(src='vendor/flot-spline/js/jquery.flot.spline.min.js')
+  // jVector Maps
+  script(src="vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js")
+  script(src="vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js")
+  script(src="vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js")
+  //- <!--[if lt IE 8]>
+  //- script(src='js/excanvas.min.js')
+  //- <![endif]-->
+
+
+if (firstMenu['Widgets']['active'] || firstMenu['Elements']['S']['Maps']['active'])
+  // Gmap
+  script(type='text/javascript', src='//maps.google.com/maps/api/js')
+  script(src='vendor/jQuery-gMap/jquery.gmap.min.js')
+
+// END Page Custom Script
+
+// App Main
+script(src='app/js/app.js')

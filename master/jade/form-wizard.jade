@@ -1,0 +1,73 @@
+extends layout/main-layout
+
+block active-item
+  - firstMenu['Forms']['active'] = 1
+  - firstMenu['Forms']['S']['Wizard']['active'] = 1
+
+block content
+
+  h3 Form Wizards
+
+  #wizard-standard
+    h1 Step One
+    .step-content
+      h2 Title for Step One
+      p Duis et orci vitae nunc ultricies tempor a quis arcu.
+    h1 Step Two
+    .step-content
+      h2 Title for Step Two
+      p Duis et orci vitae nunc ultricies tempor a quis arcu.
+    h1 Step Tree
+    .step-content
+      h2 Title for Step Tree
+      p Duis et orci vitae nunc ultricies tempor a quis arcu.
+
+  h4.page-header Wizard with validation
+
+  form#form-wizard-validate.wizard-content-lg(action='#')
+    h1 Account
+    fieldset.step-content
+      h4.page-header Account Information
+      .row
+        .col-lg-4
+          .form-group
+            label Username *
+            input#userName.form-control.required(name='userName', type='text')
+        .col-lg-4
+          .form-group
+            label Password *
+            input#password.form-control.required(name='password', type='text')
+        .col-lg-4
+          .form-group
+            label Confirm Password *
+            input#confirm.form-control.required(name='confirm', type='text')
+
+    h1 Profile
+    fieldset.step-content
+      h4.page-header Profile Information
+      .row
+        .col-lg-6
+          .form-group
+            label First name *
+            input#name.form-control.required(name='name', type='text')
+          .form-group
+            label Last name *
+            input#surname.form-control.required(name='surname', type='text')
+        .col-lg-6
+          .form-group
+            label Email *
+            input#email.form-control.required.email(name='email', type='text')
+          .form-group
+            label Address *
+            input#address.form-control(name='address', type='text')
+    h1 Warning
+    fieldset.step-content
+      .text-center
+        h2.text-center You're almost done!
+          br
+          small Just one click more
+    h1 Finish
+    fieldset.step-content
+      h4.page-header Please accept some terms
+      input#acceptTerms.required(name='acceptTerms', type='checkbox')
+      label(for='acceptTerms') I agree with the Terms and Conditions.
