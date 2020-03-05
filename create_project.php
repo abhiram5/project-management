@@ -13,6 +13,8 @@ $phoneNumber="";
 $msg="";
 $alert="hidden";
 $status="";
+$target_file="";
+$datemsg="";
 
 if(isset($_POST['submit'])){
             $projectName=$_POST['projectName'];
@@ -24,8 +26,10 @@ if(isset($_POST['submit'])){
             $costBudget= $_POST['costBudget'];
             $progress=$_POST['progress'];
             $phoneNumber=$_POST['phoneNumber'];
-            
             $status=$_POST['status'];
+            
+            
+          
 			   if($status==1){
                 $status="Active";
                  }else{
@@ -50,55 +54,55 @@ if(isset($_POST['submit'])){
                 // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
                 } 
                 else{
-                echo "Sorry, there was an error uploading your file.";
+                echo "Sorry,there was an error uploading your file.";
                 }
                 }
                 //above code for fileuploads
             
-            if(isset($_GET['edit_user'])){
-                $user_id=$_GET['edit_user'];
+            if(isset($_GET['edit_project'])){
+                $user_id=$_GET['edit_project'];
                 
                 
                 $sql="UPDATE project SET project_name='$projectName',date_start='$startDate',date_end='$endDate',contract_price=$contractPrice,cost_budget=$costBudget,progress='$progress',phone_number=$phoneNumber,project_photo='$target_file',project_status='$status' WHERE project_id=$user_id";
             //echo "UPDATE assets SET Asset_Name='$assetname',Asset_Type_Id=$assettypeid,Loc_Id=$locationid,Vendor='$vendor',Serial_Number='$serialnumber',Price=$price,Warranty=$warranty,Date_Of_Purchase='$dateformat',Status='$status' WHERE ID=$user_id";
             // "INSERT INTO students(FirstName,LastName,Password,CPassword,Branch,CourseYear,Email,Gender,DOB,Address)VALUES($firstname,$lastname,$password,$confirmpassword,$branch,$courseyear,$email,$gender,$DOB,$address)";
-                if($conn->query($sql)){
+                if($connection->query($sql)){
                   
 					$msg="updated successfully";
 					$alert="alert alert-success";
 				
-                    echo "<script>setTimeout(\"location.href = 'create_project.php';\",1500);</script>";
+                    echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
                  }else{
                 
                     $msg="not updated successfully";
-					$alert="alert alert-danger";
-                    echo "<script>setTimeout(\"location.href = 'create_project.php';\",1500);</script>";
+					     $alert="alert alert-danger";
+                    echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
                  }
              }else{
                 $sql ="INSERT INTO project(project_name,date_start,date_end,contract_price,cost_budget,progress,phone_number,project_photo,project_status)VALUES('$projectName','$startDate','$endDate','$contractPrice','$costBudget','$progress','$phoneNumber','$target_file','$status')";
                 // "INSERT INTO students(FirstName,LastName,Password,CPassword,Branch,CourseYear,Email,Gender,DOB,Address)VALUES($firstname,$lastname,$password,$confirmpassword,$branch,$courseyear,$email,$gender,$DOB,$address)";
   
-                if($conn->query($sql)){
+                if($connection->query($sql)){
 				    $msg="added successfully";
 					$alert="alert alert-success";
                     
-                    echo "<script>setTimeout(\"location.href = 'create_project.php';\",1500);</script>";
+                    echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
     // echo"<script>window.open('Assets.php');</script>";
                  } 
                else {
                     $msg=" not added successfully";
 					     $alert="alert alert-danger";
-                    echo "<script>setTimeout(\"location.href = 'create_project.php';\",1500);</script>";
+                    echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
     }
     }
 
 }
 else{
-    if(isset($_GET['edit_user']))
+    if(isset($_GET['edit_project']))
     {
-        $user_id=$_GET['edit_user'];
+        $user_id=$_GET['edit_project'];
         $view="SELECT *FROM project WHERE project_id=$user_id";
-        $viewresult=mysqli_query($conn,$view);
+        $viewresult=mysqli_query($connection,$view);
         while($rows=mysqli_fetch_assoc($viewresult))
         {
             $projectName=$rows['project_name'];
@@ -132,9 +136,8 @@ else{
                      <!-- START panel-->
                      <div class="panel panel-default">
                         <div class="panel-heading">
-                           <div class="panel-title">New Project</div>
-                           <div class="text-sm mb-sm"> <a href="create_project.php" class="btn btn-success"><i class="fa fa-plus"></i>   NEW PROJECT</a></div>
-						         <?php echo "<a href='create_project.php?source=edit_user&edit_user=33'>EDIT</a>";?>
+                           <div class="panel-title"></div>
+						        
                            <div class="<?php echo $alert;?>"><?php echo $msg;?>
                         </div>
                         <div class="panel-body">
@@ -143,9 +146,10 @@ else{
                               <input type="text" name="projectName" value="<?php echo $projectName;?>" required  class="form-control">
                            </div>
                            <div class="form-group">
-						    <label class="control-label">Date Start<span style="color:red">*</span></label>
+                           <?php echo $datemsg;?>
+						           <label class="control-label">Date Start<span style="color:red">*</span></label>
                               <div data-format="DD/MM/YYYY" class="datetimepicker input-group date mb-lg">
-                                 <input type="text"  name="dateStart"  value="<?php echo $startDate;?>" class="form-control">
+                                 <input type="text" id="start_date" name="dateStart"  value="<?php echo $startDate;?>" class="form-control" required>
                                  <span class="input-group-addon" >
                                     <span class="fa fa-calendar"></span>
                                  </span>
@@ -154,7 +158,7 @@ else{
                            <div class="form-group">
 						    <label class="control-label">Date End<span style="color:red">*</span></label>
                               <div data-format="DD/MM/YYYY" class="datetimepicker input-group date mb-lg">
-                                 <input type="text"  name="dateEnd"  value="<?php echo $endDate;?>" class="form-control">
+                                 <input type="text" id="end_date" name="dateEnd"  value="<?php echo $endDate;?>" class="form-control" required>
                                  <span class="input-group-addon" >
                                     <span class="fa fa-calendar"></span>
                                  </span>
@@ -162,11 +166,11 @@ else{
                            </div>
                            <div class="form-group">
                               <label class="control-label">Contract Price<span style="color:red">*</span></label>
-                              <input type="number" step="any" name="contractPrice"   value="<?php echo  $contractPrice;?>" required  class="form-control">
+                              <input type="number" min="0" oninput="validity.valid||(value='');" step="any" name="contractPrice"   value="<?php echo  $contractPrice;?>" required  class="form-control">
                            </div>
 						   <div class="form-group">
                               <label class="control-label">Cost Budget<span style="color:red">*</span></label>
-                              <input type="number" name="costBudget"  value="<?php echo  $costBudget;?>" required  class="form-control">
+                              <input type="number" min="0" oninput="validity.valid||(value='');" name="costBudget"  value="<?php echo  $costBudget;?>" required  class="form-control">
                            </div>
                            <div class="form-group">
                            <label class="control-label">Progress</label>
@@ -174,12 +178,12 @@ else{
                            </div>
 						   <div class="form-group">
                               <label class="control-label">Phone Number<span style="color:red">*</span></label>
-                              <input type="text" name="phoneNumber"   value="<?php echo $phoneNumber;?>" required  class="form-control">
+                              <input type="text" name="phoneNumber" id="phone"  value="<?php echo $phoneNumber;?>" required  class="form-control">
                            </div>
                            <div class="form-group">
                                 <label class="control-label">Project Photos<span style="color:red">*</span></label>
                                 <input type="file"  class="form-control" name="fileToUpload" id="fileToUpload">
-                                <img src="<?php echo $target_file;?>" alt="file not found" height=67px  >
+                                <img src="<?php echo $target_file;?>" height=67px  >
                             </div>
 						   <div class="form-group">
                            <label class="col-sm-2 control-label">Status</label>
@@ -200,7 +204,7 @@ else{
                               <div class="pull-right">
                               
 							     <a href="create_project.php" class="btn btn-danger">Cancel</a>
-                                 <input type="submit"  name="submit" value="submit" class="btn btn-primary">
+                                 <input type="submit" onClick="return validate()" name="submit" value="submit" class="btn btn-primary">
 								
 								 
                               </div>
@@ -223,9 +227,38 @@ else{
    <!-- START Scripts-->
    <!-- Main vendor Scripts-->
   
-
+<script>
+function validate(){
+   var a=document.getElementById("start_date").value;
   
-   </body>
+
+   var b=document.getElementById("end_date").value;
+   var c=document.getElementById("phone").value;
+   if(a>=b){
+      alert("end date shouls be greater than start date");
+      return false;
+
+   }
+if(c=="")
+{
+alert("please Enter the Contact Number");
+return false;
+}
+if(isNaN(a))
+{
+alert("Enter the valid Mobile Number(Like : 9566137117)");
+return false;
+}
+if((a.length < 1) || (a.length > 10))
+{
+alert(" Your Mobile Number must be 1 to 10 Integers");
+return false;
+}
+   return true;
+}
+</script>
+  
+</body>
 
 </html>
 <?php include "footer.php";?>
