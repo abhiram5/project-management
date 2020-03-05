@@ -47,19 +47,16 @@ if(isset($_GET['edit']))
                                  <div>
                                       <p><h3><?php if(isset($project_name)){echo $project_name;}?></h3></p>
                                       <strong><p class="text-muted"><?php if(isset($newDate_event)){echo $newDate_event;}?> - <?php if(isset($newDate_end)){echo $newDate_end;}?> </p></strong>
-                                          <div class="progress progress-striped progress-xs">
-                                               <div role="progressbar" aria-valuenow="<?php if(isset($progress)){echo $progress;}?>" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-purple progress-<?php if(isset($progress)){echo $progress;}?>">
-                                                  <span class="sr-only"><?php if(isset($progress)){echo $progress;}?>% Complete</span>
-                                               </div>
-                                          </div>
+                                          
                                            <div class="progress progress-xs m0">
-                                              <div role="progressbar" aria-valuenow="<?php if(isset($progress)){echo $progress;}?>" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-success progress-<?php echo $progress;?>">
-                                                <span class="sr-only">80% Complete</span>
+                                              <div role="progressbar" aria-valuenow="<?php if(isset($progress)){echo $progress;}?>" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-purple progress-<?php echo $progress;?>"style="width: <?php echo $progress.'px' ?>">
+                                                <span class="sr-only"><?php echo $progress ?> Complete</span>
                                               </div>
                                           </div>
                                     </div>
-                                 
+                                 <br><br>
                                 </div>
+                                  
                                   <div class="col-md-4 text-right" style="text-align: -webkit-center;">
                                       <table>
                                         <tbody>
@@ -78,15 +75,16 @@ if(isset($_GET['edit']))
                                       </tbody>
                                     </table>
                                  </div> 
+                                
                                  <div class="col-md-2 text-right">
-                          <a href='create_project.php?source=edit_user&edit_user=<?php echo $project_id;?>'><button type="button"  class="btn btn-primary  btn-sm fa fa-edit float-right" style="float: right;"></button></a>
+                          <a href='create_project.php?source=edit_project&edit_project=<?php echo $project_id;?>'><button type="button"  class="btn btn-primary  btn-sm fa fa-edit float-right" style="float: right;"></button></a>
                         </div>     
                               </div>
-                              
                         <!-- START table-responsive-->
-                        <div class="table-responsive">
-                           <table class="table">
-                              <thead>
+                        <div class="row">
+                            <div class="table-responsive">
+                          <table class="table">
+                              <thead style="background-color: lightgray;height: 20px;">
                                  <tr>
                                     <th>Date</th>
                                     <th>Category</th>
@@ -95,11 +93,12 @@ if(isset($_GET['edit']))
                               </thead>
                               <tbody>
                                 <?php 
-                                 $query = "SELECT date,expense_type,expense FROM `expense` where project_id = $project_id";
+                                 $query = "SELECT expense_id,date,expense_type,expense FROM `expense` where project_id = $project_id";
                                  $select_expense = mysqli_query($connection,$query);  
 
                                while($row = mysqli_fetch_assoc($select_expense))
                                   {
+                                   $expense_id = $row['expense_id'];
                                   $date = $row['date'];
                                   $newDate = date("M-Y", strtotime($date));
                                   $expense = $row['expense'];
@@ -109,14 +108,30 @@ if(isset($_GET['edit']))
                                  <tr>
                                     <td><?php echo $newDate;?></td>
                                     <td><?php echo $expense_type;?></td>
-                                    <td><?php echo $expense;?></td>
+                                    <td><a href="<?php echo 'create-update-dashboard.php?edit_category='.
+                            $expense_id.'&edit='.$project_id.''?>"><?php echo $expense;?></a></td>
                                  </tr>
                                <?php } ?>
                               </tbody>
+                              <tfoot>
+                                <?php
+                                $query = "SELECT SUM(expense) AS total FROM `expense` WHERE project_id = $project_id";
+                                 $select_expense = mysqli_query($connection,$query);  
+
+                               while($row = mysqli_fetch_assoc($select_expense))
+                                  {
+                                  $total = $row['total'];
+                                }
+                                ?>
+                                <tr>
+                                  <td>Total</td>
+                                  <td></td>
+                                  <td><?php echo $total;?></td>
+                                </tr>
+                              </tfoot>
                            </table>
                         </div>
-                        
-                        <!-- END table-responsive-->
+                      <!-- END table-responsive-->
                      </div>
                   </div>
                   <!-- END panel-->
@@ -141,3 +156,8 @@ if(isset($_GET['edit']))
    <!-- START Scripts-->
    <!-- Main vendor Scripts-->
    <?php include "footer.php";?>
+   <style type="text/css">
+     .table > thead {
+      line-height: 0px !importent;
+     }
+   </style>
