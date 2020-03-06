@@ -1,7 +1,7 @@
 <?php
 include "header.php";
 include "left-navbar.php";
-//$connection = mysqli_connect("localhost","root","","school");
+// $connection = mysqli_connect("localhost","root","","school");
 //include "session.php";
 
 $num ='';
@@ -57,17 +57,19 @@ if(isset($_GET['edit']))
     $Notes=$_POST['Notes'];
     $date = date('d/m/Y');
 
-$query="SELECT expense_type FROM expense_type where expense_type_id = $Category";
+  $query="SELECT expense_type FROM expense_type where expense_type_id = $Category";
   $expense_type_results = mysqli_query($connection,$query);  
 
   while($row = mysqli_fetch_assoc($expense_type_results))
    {
         $Category=$row['expense_type'];
-  }
+    }
  
-
+    
     if($_FILES['Image']['name'])
     {
+      echo $_FILES['Image']['name'];
+      exit();
       $path=$_FILES['Image']['name']; 
       $ext = pathinfo($path, PATHINFO_EXTENSION);
       $profileImageName =  time().$project_name.'.'.$ext;
@@ -91,7 +93,7 @@ $query="SELECT expense_type FROM expense_type where expense_type_id = $Category"
             }
             else
             {
-             $query="insert into expense(expense_type,expense,date,expense_photo,expense_note) values('$Category','$Amount','$date','$profileImageName','$Notes')";
+             $query="insert into expense(project_id,expense_type,expense,date,expense_photo,expense_note) values('$project_id','$Category','$Amount','$date','$profileImageName','$Notes')";
             }
           if(mysqli_query($connection, $query))
           {
@@ -115,7 +117,7 @@ $query="SELECT expense_type FROM expense_type where expense_type_id = $Category"
             }
             else
             {
-           $query="insert into expense(expense_type,expense,date,expense_photo,expense_note) values('$Category','$Amount','$date','$profileImageName','$Notes')";
+           $query="insert into expense(project_id,expense_type,expense,date,expense_note) values('$project_id','$Category','$Amount','$date','$Notes')";
           }
     
       if(mysqli_query($connection, $query))
@@ -214,7 +216,7 @@ $query="SELECT expense_type FROM expense_type where expense_type_id = $Category"
                                       <?php 
                                       if($num == 1)
                                       {
-                                        $results = mysqli_query($connection, "SELECT expense_photo FROM expense where expense_id = $expense_id");
+                                        $results = mysqli_query($connection, "SELECT expense_photo FROM expense where expense.project_id = $project_id");
                                            
                                           $users = mysqli_fetch_all($results, MYSQLI_ASSOC);
 
