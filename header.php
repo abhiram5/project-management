@@ -1,7 +1,7 @@
 <?php
-$connection = mysqli_connect("localhost","root","","vjp");
+$connection = mysqli_connect("localhost","root","","new project");
 //include "session.php";
- ob_start()?>
+ ob_start();?>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="ie ie7 lt-ie9 lt-ie8"        lang="en"> <![endif]-->
@@ -30,15 +30,22 @@ $connection = mysqli_connect("localhost","root","","vjp");
    <link rel="stylesheet" href="vendor/whirl/dist/whirl.css">
    <!-- START Page Custom CSS-->
    <!-- END Page Custom CSS-->
-<link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap.min.css">
+   <link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap.min.css">
    <link rel="stylesheet" href="vendor/datatables-colvis/css/dataTables.colVis.css">
+   <!-- Codemirror-->
+   <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css">
+   <!-- Bootstrap tags-->
+   <link rel="stylesheet" href="vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
    <!-- App CSS-->
    <link rel="stylesheet" href="app/css/app.css">
+   <link rel="stylesheet" href="vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+   <link rel="stylesheet" href="vendor/chosen/chosen.css">
+ 
    <!-- Modernizr JS Script-->
    <script src="vendor/modernizr/modernizr.custom.js" type="application/javascript"></script>
    <!-- FastClick for mobiles-->
    <script src="vendor/fastclick/lib/fastclick.js" type="application/javascript"></script>
- <link rel="stylesheet" href="vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+  
    
    
 </head>

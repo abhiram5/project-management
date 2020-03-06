@@ -3,39 +3,43 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "vjp"; 
-$conn = new mysqli($servername, $username, $password,$dbname);
+$dbname = "first_project"; 
+$conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 $Uerr="";
 $Perr="";
 $credentialserr="";
-if(isset($_POST['submit']))
+$err="";
+if($_SERVER["REQUEST_METHOD"] =="POST")
   {
-   
-     $myusername=$_POST['username2'];
-     $mypassword=$_POST['password2']; 
-     $_SESSION['User_Name']=$myusername;
-      
-     $sql="SELECT*FROM user";
+   // username and password sent from form 
+     $myusername=$_POST['Username']; 
+     $mypassword=$_POST['Password']; 
+ 
+     $sql="SELECT * FROM user WHERE username='$myusername' and password='$mypassword'";
      $result=mysqli_query($conn,$sql);
-     $row=mysqli_fetch_array($result);
-     //$count=mysqli_num_rows($result);
-     if(($row['username']!=$myusername)&&($row['password']!=$mypassword)){
-        $credentialserr="invalid username and password";
-     }
-     else if($row['username']!=$myusername){
-         $Uerr="invalid username";
-        ////header("location:login.php?login=username");
-    }else if($row['password']!=$mypassword){
-        $Perr="invalid password";
-        //header("location:login.php?login=password");
-    }else if(($row['username']==$myusername)&&($row['password']==$mypassword)){
-         header("location:assets.php");
-     }
-}
-?>
+     
+ 
+     $count=mysqli_num_rows($result);
+ 
+    // If result matched $myusername and $mypassword, table row must be 1 row
+    if($count==1)
+    {
+     
+     $_SESSION['login_user']=$myusername;
+ 
+     header("location:dashboard.php");
+    }
+    else 
+    {
+    $err="Your Login Name or Password is invalid";
+    }
+  }
+     
+     
+ ?>  
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="ie ie7 lt-ie9 lt-ie8"        lang="en"> <![endif]-->
@@ -52,7 +56,7 @@ if(isset($_POST['submit']))
    <meta name="description" content="">
    <meta name="keywords" content="">
    <meta name="author" content="">
-   <title>BeAdmin - Bootstrap Admin Theme</title>
+   <title>Project Management</title>
    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries-->
    <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
    <!-- Bootstrap CSS-->
@@ -63,6 +67,12 @@ if(isset($_POST['submit']))
    <!-- App CSS-->
    <link rel="stylesheet" href="app/css/app.css">
    <link rel="stylesheet" href="app/css/common.css">
+   <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <!-- Modernizr JS Script-->
    <script src="vendor/modernizr/modernizr.custom.js" type="application/javascript"></script>
    <!-- FastClick for mobiles-->
@@ -84,15 +94,15 @@ if(isset($_POST['submit']))
                </p>
             </div>
             <div class="panel-body">
-			 <div class="alert-danger"><?php echo $credentialserr;?></div>
+			 <div class="alert-danger"><?php echo $err;?></div>
                <form role="form" action="" method="post" class="mb-lg">
                   
                   <div class="form-group has-feedback">
-                     <input type="text" class="form-control" Placeholder="Username" id="username2"  name="username2" required><div class="alert-danger"><?php echo $Uerr;?></div>
+                     <input type="text" class="form-control" Placeholder="Username" id="username"  name="Username" required>
                      <span class="fa fa-user form-control-feedback text-muted"></span>
                   </div>
                   <div class="form-group has-feedback">
-                    <input type="password" class="form-control" Placeholder="Password" id="password2" name="password2" required><div class="alert-danger"><?php echo $Perr;?></div>
+                    <input type="password" class="form-control" Placeholder="Password" id="password" name="Password" required>
                      <span class="fa fa-lock form-control-feedback text-muted"></span>
                   </div>
                   <div class="clearfix">
