@@ -15,7 +15,12 @@
    <script src="vendor/store-js/store%2Bjson2.min.js"></script>
    <!-- ScreenFull-->
    <script src="vendor/screenfull/dist/screenfull.min.js"></script>
+   <script src="vendor/parsleyjs/dist/parsley.min.js"></script>
    <!-- START Page Custom Script-->
+   <!-- Tags input-->
+   <script src="vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
+   <!-- Input Mask-->
+   <script src="vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
    <!--  Flot Charts-->
    <script src="vendor/flot/jquery.flot.js"></script>
    <script src="vendor/flot.tooltip/js/jquery.flot.tooltip.js"></script>
@@ -24,6 +29,13 @@
    <script src="vendor/flot/jquery.flot.time.js"></script>
    <script src="vendor/flot/jquery.flot.categories.js"></script>
    <script src="vendor/flot-spline/js/jquery.flot.spline.min.js"></script>
+   <!-- START Page Custom Script-->
+   <script src="vendor/codemirror/lib/codemirror.js"></script>
+   <script src="vendor/codemirror/addon/mode/overlay.js"></script>
+   <script src="vendor/codemirror/mode/markdown/markdown.js"></script>
+   <script src="vendor/codemirror/mode/xml/xml.js"></script>
+   <script src="vendor/codemirror/mode/gfm/gfm.js"></script>
+   <script src="vendor/marked/lib/marked.js"></script>
    <!-- jVector Maps-->
    <script src="vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
    <script src="vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js"></script>
@@ -41,6 +53,19 @@
    <!-- App Main-->
    <script src="app/js/app.js"></script> 
    <!-- END Scripts-->
+   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+	 
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+      
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 </body>
 
 </html>

@@ -56,21 +56,15 @@ include "session.php";
                         </a>
                   </li>
                   <li class="active">
-                  <a href="events-datatable.php" title="Events" data-toggle="" class="no-submenu">
+                  <a href="dashboard.php" title="Events" data-toggle="" class="no-submenu">
                      <em class="fa fa-calendar"></em>
-                     <span class="item-text">Events</span>
+                     <span class="item-text">Projects</span>
                   </a>
                   </li>
                   <li class="active">
-                  <a href="class-datatable.php" title="Classes" data-toggle="" class="no-submenu">
+                  <a href="categories.php" title="Classes" data-toggle="" class="no-submenu">
                      <em class="fa fa-list"></em>
-                     <span class="item-text">Classes</span>
-                  </a>
-                  </li>
-                  <li class="active">
-                  <a href="student-datatable.php" title="Students" data-toggle="" class="no-submenu">
-                     <em class="fa fa-book"></em>
-                     <span class="item-text">Students</span>
+                     <span class="item-text">Expense Categories</span>
                   </a>
                   </li>
                    <li class="active">
