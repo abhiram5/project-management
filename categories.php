@@ -88,7 +88,7 @@ if(isset($_POST['Category']))
                         	<?php } ?>
                            <div class="form-group">
                               <label class="control-label">Expense Category type <strong style="font-size:18px;color:red;">*</strong>:</label>
-                             <input type="text" value="<?php if(isset($expense_Type)){ echo  $expense_Type ;}?>" placeholder="Enter Expense Category type" class="form-control" required name="ExpenseCategorytype">
+                             <input type="text" data-parsley-maxlength="16" value="<?php if(isset($expense_Type)){ echo  $expense_Type ;}?>" placeholder="Enter Expense Category type" class="form-control" required name="ExpenseCategorytype">
                            </div>
                      	</div>
                      	<div class="panel-footer">	
