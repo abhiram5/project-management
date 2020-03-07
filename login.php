@@ -3,7 +3,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "first_project"; 
+$dbname = "new project"; 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -12,16 +12,15 @@ $Uerr="";
 $Perr="";
 $credentialserr="";
 $err="";
-if($_SERVER["REQUEST_METHOD"] =="POST")
+if($_SERVER["REQUEST_METHOD"] == "POST")
   {
    // username and password sent from form 
-     $myusername=$_POST['Username']; 
-     $mypassword=$_POST['Password']; 
- 
+     $myusername=$_POST['Username'];
+     $mypassword=md5($_POST['Password']);
+   
      $sql="SELECT * FROM user WHERE username='$myusername' and password='$mypassword'";
      $result=mysqli_query($conn,$sql);
-     
- 
+     $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
      $count=mysqli_num_rows($result);
  
     // If result matched $myusername and $mypassword, table row must be 1 row
@@ -29,6 +28,8 @@ if($_SERVER["REQUEST_METHOD"] =="POST")
     {
      
      $_SESSION['login_user']=$myusername;
+     $_SESSION['login_password']=$mypassword;
+
  
      header("location:dashboard.php");
     }
@@ -36,7 +37,10 @@ if($_SERVER["REQUEST_METHOD"] =="POST")
     {
     $err="Your Login Name or Password is invalid";
     }
-  }
+  
+  
+}
+     
      
      
  ?>  
@@ -87,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] =="POST")
          <div data-toggle="play-animation" data-play="fadeIn" data-offset="0" class="panel panel-dark panel-flat">
             <div class="panel-heading text-center">
                <a href="#">
-                  <img src="app/img/sixthblock2.png" alt="Image" width=30%; height=30%; class="block-center img-rounded">
+                  <img src="app/img/projectmgntLogo.png" alt="Image" width=90%; height=10%; class="block-center img-rounded">
                </a>
                <p class="text-center mt-lg">
                   <strong>SIGN IN TO CONTINUE.</strong>
@@ -95,19 +99,17 @@ if($_SERVER["REQUEST_METHOD"] =="POST")
             </div>
             <div class="panel-body">
 			 <div class="alert-danger"><?php echo $err;?></div>
-               <form role="form" action="" method="post" class="mb-lg">
+               <form role="form" action=""  method="post" class="mb-lg" data-parsley-validate="" novalidate="" >
                   
                   <div class="form-group has-feedback">
-                     <input type="text" class="form-control" Placeholder="Username" id="username"  name="Username" required>
+                     <input type="text" Placeholder="Username" id="username"  name="Username" required class="form-control">
                      <span class="fa fa-user form-control-feedback text-muted"></span>
                   </div>
                   <div class="form-group has-feedback">
-                    <input type="password" class="form-control" Placeholder="Password" id="password" name="Password" required>
+                    <input type="password"  Placeholder="Password" id="password" name="Password" required class="form-control">
                      <span class="fa fa-lock form-control-feedback text-muted"></span>
                   </div>
-                  <div class="clearfix">
-                     <div class="pull-right"><a href="#" class="text-muted">Need to Signup?</a>
-                     </div>
+                  
                   </div>
                   <input type="submit" name="submit" value="Login" class="btn btn-block btn-primary">
                </form>
@@ -119,6 +121,8 @@ if($_SERVER["REQUEST_METHOD"] =="POST")
    <!-- END wrapper-->
    <!-- START Scripts-->
    <!-- Main vendor Scripts-->
+   <!-- Form Validation-->
+   <script src="vendor/parsleyjs/dist/parsley.min.js"></script>
    <script src="vendor/jquery/dist/jquery.min.js"></script>
    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
    <!-- Animo-->
@@ -127,5 +131,4 @@ if($_SERVER["REQUEST_METHOD"] =="POST")
    <script src="app/js/pages.js"></script>
    <!-- END Scripts-->
 </body>
-
 </html>
