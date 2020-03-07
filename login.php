@@ -3,7 +3,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "new project"; 
+$dbname = "vjp"; 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -21,21 +21,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
      $sql="SELECT * FROM user WHERE username='$myusername' and password='$mypassword'";
      $result=mysqli_query($conn,$sql);
      $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+     
      $count=mysqli_num_rows($result);
  
     // If result matched $myusername and $mypassword, table row must be 1 row
     if($count==1)
     {
-     
+      $userid=$row['userid'];
      $_SESSION['login_user']=$myusername;
      $_SESSION['login_password']=$mypassword;
-
- 
+     $_SESSION['userid'] = $userid;    
      header("location:dashboard.php");
     }
     else 
     {
     $err="Your Login Name or Password is invalid";
+    header("location: login.php");
     }
   
   
@@ -94,7 +95,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                   <img src="app/img/projectmgntLogo.png" alt="Image" width=90%; height=10%; class="block-center img-rounded">
                </a>
                <p class="text-center mt-lg">
-                  <strong>SIGN IN TO CONTINUE.</strong>
+                  <strong style="color: black;">SIGN IN TO CONTINUE.</strong>
                </p>
             </div>
             <div class="panel-body">

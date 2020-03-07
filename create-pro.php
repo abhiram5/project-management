@@ -3,6 +3,8 @@ include "header.php";
 include "left-navbar.php";
 $num ='';
 $Name='Create ';
+$project_status='';
+
 if(isset($_GET['edit_project']))
     {
        $num=1;
@@ -22,11 +24,40 @@ if(isset($_GET['edit_project']))
             $progress=$rows['progress'];
             $phoneNumber=$rows['phone_number'];
             $Image=$rows['project_photo'];
-            $status=$rows['project_status'];
+            $project_status=$rows['project_status'];
+         
         }
     }
+    ?>
+    <section>
+         <!-- START Page content-->
+         <div class="content-wrapper">
+            <h3><?php echo $Name ;?>Project </h3>
+            <!-- START row-->
+            <div class="row">
+               <div class="col-lg-6">
+              
+                  <form method="post" action="" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
+                     <!-- START panel-->
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <div class="panel-title"></div>
+                        <div class="panel-body">
+                        <?php 
+                        if(isset($_session['message'])){
+                        $error = $_session['message'];?>
+                        <div class="alert alert-success alert-dismissable">
+                           <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>  
+                           <?php  echo "<center> $error </center>"; 
+                                ?>
+                            </div>
+                        <?php }
+                        ?>
+    <?php
+     unset($_SESSION["message"]);
 if(isset($_POST['submit']))
 {
+   $message ='';
    $projectName=$_POST['projectName'];
    $dateStart=$_POST['dateStart'];
    $startDate = date("d/m/Y", strtotime($dateStart));
@@ -36,7 +67,7 @@ if(isset($_POST['submit']))
    $costBudget= $_POST['costBudget'];
    $progress=45;
    $phoneNumber=$_POST['phoneNumber'];
-   $status=$_POST['post_status'];
+   $status=isset($_POST['post_status'])?$_POST['post_status']:0;
    //$Image=$_POST['Image'];
 
    if($_FILES['Image']['name'])
@@ -62,7 +93,7 @@ if(isset($_POST['submit']))
          if($num==1)
           {
             $query="UPDATE project SET project_name='$projectName',date_start='$startDate',date_end='$endDate',contract_price=$contractPrice,cost_budget=$costBudget,progress='$progress',phone_number=$phoneNumber,project_photo='$profileImageName',project_status='$status' WHERE project_id=$project_id";
-           }
+         }
            else
            {
              
@@ -77,7 +108,7 @@ if(isset($_POST['submit']))
                header("Location: project-view.php?edit=$project_id");
              }
              else{
-               $message ="Added successfully.";
+               $_session['message'] ="Added successfully.";
                header("Location: create-pro.php");
                
              }    
@@ -96,7 +127,8 @@ if(isset($_POST['submit']))
      if($num==1)
           {
             $query="UPDATE project SET project_name='$projectName',date_start='$startDate',date_end='$endDate',contract_price=$contractPrice,cost_budget=$costBudget,progress='$progress',phone_number=$phoneNumber,project_status='$status' WHERE project_id=$project_id";
-           }
+           
+         }
            else
            {
          
@@ -113,7 +145,7 @@ if(isset($_POST['submit']))
          header("Location: project-view.php?edit=$project_id");
        }
        else{
-         $message ="Added successfully.";
+         $_session['message'] ="Added successfully.";
          header("Location: create-pro.php");
          
        }    
@@ -129,28 +161,7 @@ if(isset($_POST['submit']))
 
 ?>
 
-<section>
-         <!-- START Page content-->
-         <div class="content-wrapper">
-            <h3><?php echo $Name ;?>Project </h3>
-            <!-- START row-->
-            <div class="row">
-               <div class="col-lg-6">
-               <?php 
-                        if(isset($message)){
-                        $error = $message;?>
-                        <div class="alert alert-success alert-dismissable">
-                           <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>  <?php  echo "<center> $error </center>"; 
-                                ?>
-                            </div>
-                        <?php }
-                        ?>
-                  <form method="post" action="" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
-                     <!-- START panel-->
-                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           <div class="panel-title"></div>
-                        <div class="panel-body">
+
                            <div class="form-group">
                               <label class="control-label">Project Name<span style="color:red">*</span></label>
                               <input type="text" name="projectName" value="<?php if(isset($projectName)){echo $projectName;}?>" required  class="form-control">
@@ -159,7 +170,7 @@ if(isset($_POST['submit']))
                            <div class="form-group">
 						           <label class="control-label">Date Start<span style="color:red">*</span></label>
                               <div data-format="DD/MM/YYYY" class="datetimepicker input-group date mb-lg">
-                                 <input type="text" id="start_date"  value="<?php if(isset($projectName)){ echo $new_startdate;}?>" name="dateStart" class="form-control" required>
+                                 <input type="text" id="tsdate"  value="<?php if(isset($projectName)){ echo $new_startdate;}?>" name="dateStart" class="form-control" required>
                                  <span class="input-group-addon" >
                                     <span class="fa fa-calendar"></span>
                                  </span>
@@ -168,19 +179,20 @@ if(isset($_POST['submit']))
                            <div class="form-group">
 						    <label class="control-label">Date End<span style="color:red">*</span></label>
                               <div data-format="DD/MM/YYYY" class="datetimepicker input-group date mb-lg">
-                                 <input type="text" id="end_date" name="dateEnd" value="<?php if(isset($projectName)){ echo $new_enddate;}?>"  class="form-control" required>
+                                 <input type="text" id="tedate" name="dateEnd" value="<?php if(isset($projectName)){ echo $new_enddate;}?>"  class="form-control" required>
                                  <span class="input-group-addon" >
                                     <span class="fa fa-calendar"></span>
                                  </span>
                               </div>
                            </div>
+                           
                            <div class="form-group">
                               <label class="control-label">Contract Price<span style="color:red">*</span></label>
-                              <input type="number" min="0" oninput="validity.valid||(value='');" step="any" name="contractPrice"  value="<?php if(isset($projectName)){echo  $contractPrice;}?>"  required  class="form-control">
+                              <input type="number" min="1"  step="any" name="contractPrice"  value="<?php if(isset($projectName)){echo  $contractPrice;}?>"  required  class="form-control">
                            </div>
 						       <div class="form-group">
                               <label class="control-label">Cost Budget<span style="color:red">*</span></label>
-                              <input type="number" min="0" oninput="validity.valid||(value='');" name="costBudget" value="<?php if(isset($projectName)){echo  $costBudget;}?>" required  class="form-control">
+                              <input type="number" min="1" name="costBudget" value="<?php if(isset($projectName)){echo  $costBudget;}?>" required  class="form-control">
                            </div>
                            <div class="form-group">
                            <label class="control-label">Progress</label>
@@ -219,7 +231,7 @@ if(isset($_POST['submit']))
                                      <img src="<?php  echo 'app/img/user/' .'avatar.jpg';?>" width="150" height="150" alt="" onClick="triggerClick()" id="profileDisplay">
                                    <?php } ?>
                                 </span>       
-                             <input type="file" name="Image" value="<?php echo  $Image; ?>" onChange="displayImage(this)" id="profileImage"  class="form-control" style="display: none;">   
+                             <input type="file" name="Image" value="<?php if(isset($Image)){echo  $Image;}else{ echo 'app/img/user/' .'avatar.jpg';} ?>" onChange="displayImage(this)" id="profileImage"  class="form-control" style="display: none;">   
                           </div><!-- value="" -->
                         </div>
                     </div>
@@ -228,7 +240,7 @@ if(isset($_POST['submit']))
                            <div class="col-sm-10">
                               <label class="switch">
                                   <input type="checkbox" data-toggle="toggle" data-style="ios" id="status"
-                                     name="post_status" <?php if(isset($status)){echo 'checked'; }?>  value=1 >
+                                     name="post_status" <?php if($project_status){echo 'checked'; }?> value=1>
                                  <span></span>
                               </label>
                            </div>
@@ -274,5 +286,25 @@ function displayImage(e) {
     reader.readAsDataURL(e.files[0]);
   }
 }
- </script>
+
+ 
+    //Validation for Stratdate & Enddate for New Ticket creation form                       
+
+    $("#tedate").change(function () {
+
+        var objFromDate = document.getElementById("tsdate").value; 
+        var objToDate = document.getElementById("tedate").value;
+
+        var FromDate = new Date(objFromDate);
+        var ToDate = new Date(objToDate);
+
+        if(strtotime(FromDate) > strtotime(ToDate) )
+        {
+            alert("Due Date Should Be Greater Than Start Date");
+            document.getElementById("tedate").value = "";
+            return false; 
+        }
+
+    });
+</script>
       <?php include "footer.php"; ?>

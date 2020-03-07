@@ -1,4 +1,4 @@
-<!-- <?php session_start();
-//$_SESSION['username']= null;
-//header("Location: login-form.php");
-?> -->
+<?php session_start();
+$_SESSION['login_user']= null;
+header("Location: login.php");
+?>

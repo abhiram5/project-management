@@ -19,7 +19,7 @@ $connection = mysqli_connect("localhost","root","","vjp");
    <meta name="description" content="">
    <meta name="keywords" content="">
    <meta name="author" content="">
-   <title>Project Manager</title>
+   <title>VJP Project Management</title>
    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries-->
    <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
    <!-- Bootstrap CSS-->
@@ -46,8 +46,9 @@ $connection = mysqli_connect("localhost","root","","vjp");
    <!-- FastClick for mobiles-->
    <script src="vendor/fastclick/lib/fastclick.js" type="application/javascript"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   
-   
+   <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/> -->
+            <link rel="stylesheet" href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
 </head>
 <body>
    <!-- START Main wrapper-->

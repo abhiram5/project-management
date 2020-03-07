@@ -3,7 +3,7 @@ include "header.php";
 include "left-navbar.php";
 //include "session.php";
 
-$query="SELECT * FROM `user` WHERE userid=18";
+$query="SELECT * FROM `user` WHERE userid= $user_id";
       $select_teacher = mysqli_query($connection, $query);  
 
       while($row = mysqli_fetch_assoc($select_teacher)) 
@@ -25,12 +25,12 @@ if(isset($_POST['update_post']))
     $status = $_POST['toggle'];
    if($enteredpassword==$password)
    {
-    $query= "update user set name='$name',username='$username',user_role='$role',account_status='$status' where userid=18";
+    $query= "update user set name='$name',username='$username',user_role='$role',account_status='$status' where userid=$user_id";
 
    }
    else{
     $encryptedPassword = md5($enteredpassword);
-    $query= "update user set name='$name',username='$username',password='$encryptedPassword',user_role='$role',account_status='$status' where userid=18";
+    $query= "update user set name='$name',username='$username',password='$encryptedPassword',user_role='$role',account_status='$status' where userid=$user_id";
     $password=$encryptedPassword;
     }
     $results=mysqli_query($connection,$query);
@@ -52,13 +52,13 @@ if(isset($_POST['update_post']))
             </h3>
       <div class="row">
                <!-- START dashboard main content-->
-         <section class="col-md-12">
+         <section class="col-md-6">
            <form action="" method="post" enctype="multipart/form-data">
             <div class="panel panel-default">
                <div class="panel-body">
                   <div class="row">
                 
-                     <div class="col-md-8">
+                     <div class="col-md-12">
                          <?php
                      if(!empty($CategoryTypeMessage))
                           { ?>
