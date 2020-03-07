@@ -5,6 +5,7 @@ include "left-navbar.php";
 //include "session.php";
 
 $num ='';
+$check ='';
 $CategoryTypeErrorMessage='';
 if(isset($_GET['edit']))
 {    
@@ -62,14 +63,13 @@ if(isset($_GET['edit']))
 
   while($row = mysqli_fetch_assoc($expense_type_results))
    {
-        $Category=$row['expense_type'];
+        $Category_name=$row['expense_type'];
     }
  
     
     if($_FILES['Image']['name'])
     {
-      echo $_FILES['Image']['name'];
-      exit();
+     
       $path=$_FILES['Image']['name']; 
       $ext = pathinfo($path, PATHINFO_EXTENSION);
       $profileImageName =  time().$project_name.'.'.$ext;
@@ -89,17 +89,20 @@ if(isset($_GET['edit']))
         {
           if($num==1)
            {
-             $query="update expense set expense_type='$Category',expense='$Amount',date='$date',expense_photo='$profileImageName',expense_note='$Notes' where expense_id=$expense_id";
+             $query="update expense set expense_type='$Category_name',expense='$Amount',date='$date',expense_photo='$profileImageName',expense_note='$Notes' where expense_id=$expense_id";
             }
             else
             {
-             $query="insert into expense(project_id,expense_type,expense,date,expense_photo,expense_note) values('$project_id','$Category','$Amount','$date','$profileImageName','$Notes')";
+              
+             $query="insert into expense(project_id,expense_type,expense,date,expense_photo,expense_note) values('$project_id','$Category_name','$Amount','$date','$profileImageName','$Notes')";
             }
           if(mysqli_query($connection, $query))
           {
             $msg = "Updated successfully with file";
             $msg_class = "alert-success";
-              // header("Refresh:1");
+              
+                header("Location: project-view.php?edit=$project_id");   
+              
           }
           else 
           {
@@ -113,18 +116,22 @@ if(isset($_GET['edit']))
     {   
       if($num==1)
            {
-             $query="update expense set expense_type='$Category',expense='$Amount',date='$date',expense_note='$Notes' where expense_id=$expense_id";
+             $query="update expense set expense_type='$Category_name',expense='$Amount',date='$date',expense_note='$Notes' where expense_id=$expense_id";
             }
             else
             {
-           $query="insert into expense(project_id,expense_type,expense,date,expense_note) values('$project_id','$Category','$Amount','$date','$Notes')";
+          
+           $query="insert into expense(project_id,expense_type,expense,date,expense_note) values('$project_id','$Category_name','$Amount','$date','$Notes')";
           }
     
       if(mysqli_query($connection, $query))
       {
         $msg = "Updated successfully  asds";
         $msg_class = "alert-success";
-        // header("Refresh:1");
+        
+                header("Location: project-view.php?edit=$project_id");
+               
+         
       }
       else
       {
@@ -183,7 +190,7 @@ if(isset($_GET['edit']))
                                  </div> 
                                  <div class="col-md-2 text-right">
                                   <div class="form-group">
-                                   <a href='create_project.php?source=edit_user&edit_user=<?php echo $project_id;?>'><button type="button"  class="btn btn-primary  btn-sm fa fa-edit float-right" style="float: right;"></button></a>
+                                   <!-- <a href='create_project.php?source=edit_user&edit_user=<?php //echo $project_id;?>'><button type="button"  class="btn btn-primary  btn-sm fa fa-edit float-right" style="float: right;"></button></a> -->
                                   </div>
                                   <br><br>
                                   <div class="form-group">
@@ -194,7 +201,7 @@ if(isset($_GET['edit']))
                             </div>  
                         </div>
                       <div class="row">
-                       <form method="post">
+                       <form method="post" enctype="multipart/form-data">
                          <div class="col-md-6">
                           <label class="control-label"><?php if(isset($date)){ echo $date ;}?></label>
                             <div class="form-group">
@@ -216,14 +223,9 @@ if(isset($_GET['edit']))
                                       <?php 
                                       if($num == 1)
                                       {
-                                        $results = mysqli_query($connection, "SELECT expense_photo FROM expense where expense.project_id = $project_id");
-                                           
-                                          $users = mysqli_fetch_all($results, MYSQLI_ASSOC);
-
-                                            foreach ($users as $user):
-                                            ?>
-                                         <img src="<?php if($user['expense_photo']){ echo 'app/img/user/' . $user['expense_photo'];}else { echo 'app/img/user/' .'avatar.jpg';}?>" width="150" height="150" alt="picture" onClick="triggerClick()" id="profileDisplay">
-                                          <?php endforeach; 
+                                         ?>
+                                         <img src="<?php if( $Image){ echo 'app/img/user/' . $Image;}else { echo 'app/img/user/' .'avatar.jpg';}?>" width="150" height="150" alt="picture" onClick="triggerClick()" id="profileDisplay">
+                                          <?php 
                                       }
                                       else
                                       {
@@ -231,7 +233,7 @@ if(isset($_GET['edit']))
                                      <img src="<?php  echo 'app/img/user/' .'avatar.jpg';?>" width="150" height="150" alt="" onClick="triggerClick()" id="profileDisplay">
                                    <?php } ?>
                                 </span>       
-                             <input type="file" name="Image" onChange="displayImage(this)" id="profileImage" value="<?php echo $user['expense_photo']; ?>" class="form-control" style="display: none;">   
+                             <input type="file" name="Image" onChange="displayImage(this)" id="profileImage" value="<?php echo  $Image; ?>" class="form-control" style="display: none;">   
                           </div>
                         </div>
                     </div>
@@ -239,23 +241,21 @@ if(isset($_GET['edit']))
                                <label class="control-label">Amount :</label>
                               <input type="text" name="Amount" value="<?php if(isset($Amount)){ echo  $Amount ;}?>" required class="form-control">
                             <div class="form-group">
-                              <label class="control-label">Category :</label>
+                              <label class="control-label">Category : </label>
                               <?php
                               $select_query = "SELECT expense_type_id,expense_type FROM `expense_type`";
                               $select_query_run = mysqli_query($connection, $select_query);
-                                                                            
+                                                          
                               echo "<select required name = 'Category' class = 'form-control' >";
-                                if($num == 1)                                                                         
-                               {
-                                echo "<option value='".$expense_id."'>".$Category."</option>";
-                               }
-                               else 
-                               {
-                                echo "<option value=''>Select teacher name</option>";
-                               }
+
+                              echo "<option value=''>Select teacher name</option>";
                                 while($select_query_array = mysqli_fetch_assoc($select_query_run))
                               {
-                              echo "<option value='".$select_query_array['expense_type_id']."' >".$select_query_array['expense_type']."</option>";                        
+                                $selected='';
+                                if($Category==$select_query_array['expense_type']){
+                                  $selected="selected";
+                                }
+                              echo "<option value='".$select_query_array['expense_type_id']."' ".$selected." >".$select_query_array['expense_type']."</option>";                        
                               }
                               echo "</select>";
                               ?>
@@ -271,25 +271,18 @@ if(isset($_GET['edit']))
                             <div class="text-center">
                                <button type="submit" class="btn btn-sm btn-primary" name="Submit">Submit</button>
                             </div>
+                          </div>
                          </div>
-                         </div>
-                           <br><br>
-                           
-                          </form>                    
-                          </div>   
-                        <!-- START table-responsive-->
-                        <!-- END table-responsive-->
-                     </div>
-                   </div>
-                  </div>
-                  <!-- END panel-->
-               </div>
-             </div>
-            </div>
+                      </form>                    
+                  </div>   
+                </div>
+              </div>
+          </div>
         </div>
-               
-         <!-- END Page content-->
-      </section>
+      </div>
+  </div>
+</div>
+</section>
       <!-- END Main section-->
   <script src="vendor/jquery/dist/jquery.min.js"></script>
  <!--   <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script> -->

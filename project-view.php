@@ -1,10 +1,10 @@
 <?php
 include "header.php";
 include "left-navbar.php";
+
 ?>
-<section>
-         <!-- START Page content-->
-         <div class="content-wrapper">
+    <section>
+        <div class="content-wrapper">
             <h3>
                <div class="pull-right text-center">
                  <a href="dashboard.php" ><button type="button"  class="btn btn-danger  btn-sm fa fa-arrow-left float-right" style="float: right;">Go Back</button></a>
@@ -39,24 +39,18 @@ if(isset($_GET['edit']))
               <div class="row">
                 <div class="col-lg-12">
                   <div class="panel panel-default">
-                    <div class="row">
-                     <div class="col-lg-12">
-                         <div class="panel-body">
+                    <div class="panel-body">
                            <div class="row">
                               <div class="col-md-6">
-                                 <div>
-                                      <p><h3><?php if(isset($project_name)){echo $project_name;}?></h3></p>
-                                      <strong><p class="text-muted"><?php if(isset($newDate_event)){echo $newDate_event;}?> - <?php if(isset($newDate_end)){echo $newDate_end;}?> </p></strong>
-                                          
-                                           <div class="progress progress-xs m0">
+                                 <p><h3><?php if(isset($project_name)){echo $project_name;}?></h3></p>
+                                   <strong><p class="text-muted"><?php if(isset($newDate_event)){echo $newDate_event;}?> - <?php if(isset($newDate_end)){echo $newDate_end;}?> </p></strong>
+                                       <div class="progress progress-xs m0">
                                               <div role="progressbar" aria-valuenow="<?php if(isset($progress)){echo $progress;}?>" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-purple progress-<?php echo $progress;?>"style="width: <?php echo $progress.'px' ?>">
                                                 <span class="sr-only"><?php echo $progress ?> Complete</span>
                                               </div>
                                           </div>
-                                    </div>
-                                 <br><br>
+                                  <br><br>
                                 </div>
-                                  
                                   <div class="col-md-4 text-right" style="text-align: -webkit-center;">
                                       <table>
                                         <tbody>
@@ -75,86 +69,68 @@ if(isset($_GET['edit']))
                                       </tbody>
                                     </table>
                                  </div> 
-                                
-                                 <div class="col-md-2 text-right">
-                          <a href='create_project.php?source=edit_project&edit_project=<?php echo $project_id;?>'><button type="button"  class="btn btn-primary  btn-sm fa fa-edit float-right" style="float: right;"></button></a>
-                        </div>     
-                              </div>
-                        <!-- START table-responsive-->
-                        <div class="row">
-                            <div class="table-responsive">
-                          <table class="table">
-                              <thead style="background-color: lightgray;height: 20px;">
-                                 <tr>
-                                    <th>Date</th>
-                                    <th>Category</th>
-                                    <th>Expense</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                <?php 
-                                 $query = "SELECT expense_id,date,expense_type,expense FROM `expense` where project_id = $project_id";
-                                 $select_expense = mysqli_query($connection,$query);  
+                                <div class="col-md-2 text-right">
+                                  <a href='create-pro.php?source=edit_project&edit_project=<?php echo $project_id;?>'><button type="button"  class="btn btn-primary  btn-sm fa fa-edit float-right" style="float: right;"></button></a>
+                                </div>     
+                            </div>
+                          <div class="row">
+                          <div class="col-lg-12">
+                            <table id="datatable1" class="table table-striped table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th>Date</th>
+                                          <th>Category</th>
+                                          <th>Expense</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                      <?php 
+                                          $query = "SELECT expense_id,date,expense_type,expense FROM `expense` where project_id = $project_id";
+                                          $select_expense = mysqli_query($connection,$query);  
 
-                               while($row = mysqli_fetch_assoc($select_expense))
-                                  {
-                                   $expense_id = $row['expense_id'];
-                                  $date = $row['date'];
-                                  $newDate = date("M-Y", strtotime($date));
-                                  $expense = $row['expense'];
-                                  $expense_type = $row['expense_type'];
-                                  
-                                ?>
-                                 <tr>
-                                    <td><?php echo $newDate;?></td>
-                                    <td><?php echo $expense_type;?></td>
-                                    <td><a href="<?php echo 'create-update-dashboard.php?edit_category='.
-                            $expense_id.'&edit='.$project_id.''?>"><?php echo $expense;?></a></td>
-                                 </tr>
-                               <?php } ?>
-                              </tbody>
-                              <tfoot>
-                                <?php
-                                $query = "SELECT SUM(expense) AS total FROM `expense` WHERE project_id = $project_id";
-                                 $select_expense = mysqli_query($connection,$query);  
+                                        while($row = mysqli_fetch_assoc($select_expense))
+                                            {
+                                            $expense_id = $row['expense_id'];
+                                            $date = $row['date'];
+                                            $newDate = date("M-Y", strtotime($date));
+                                            $expense = $row['expense'];
+                                            $expense_type = $row['expense_type'];
+                                            
+                                          ?>
+                                          <tr>
+                                              <td><?php echo $newDate;?></td>
+                                              <td><?php echo $expense_type;?></td>
+                                              <td><a href="<?php echo 'create-update-dashboard.php?edit_category='.
+                                      $expense_id.'&edit='.$project_id.''?>"><?php echo $expense;?></a></td>
+                                          </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                          <?php
+                                          $query = "SELECT SUM(expense) AS total FROM `expense` WHERE project_id = $project_id";
+                                          $select_expense = mysqli_query($connection,$query);  
 
-                               while($row = mysqli_fetch_assoc($select_expense))
-                                  {
-                                  $total = $row['total'];
-                                }
-                                ?>
-                                <tr>
-                                  <td>Total</td>
-                                  <td></td>
-                                  <td><?php echo $total;?></td>
-                                </tr>
-                              </tfoot>
-                           </table>
-                        </div>
-                      <!-- END table-responsive-->
-                     </div>
-                  </div>
-                  <!-- END panel-->
+                                        while($row = mysqli_fetch_assoc($select_expense))
+                                            {
+                                            $total = $row['total'];
+                                          }
+                                          ?>
+                                          <tr>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td><?php echo $total;?></td>
+                                          </tr>
+                                        </tfoot>
+                                  </table>
+                            </div>
+                         </div>
+                      </div>
+                    </div>
+                 </div>
                </div>
              </div>
-            </div>
-        </div>
-       </div>           
-                  <!-- START chart-->
-                  
-               <!-- END dashboard sidebar-->
-           
-        
-        
-         </div>
-          </div>
-         <!-- END Page content-->
-      </section>
-      <!-- END Main section-->
- 
-   <!-- END Main wrapper-->
-   <!-- START Scripts-->
-   <!-- Main vendor Scripts-->
+          </div>           
+       </section>
    <?php include "footer.php";?>
    <style type="text/css">
      .table > thead {

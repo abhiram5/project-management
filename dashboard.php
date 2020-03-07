@@ -7,7 +7,7 @@ include "left-navbar.php";
          <div class="content-wrapper">
             <h3>
                 <div class="pull-right text-center">
-                 <a href="create_project.php" ><button type="button"  class="btn btn-primary  btn-sm fa fa-plus float-right" style="float: right;">Add project</button></a>
+                 <a href="create-pro.php" ><button type="button"  class="btn btn-primary  btn-sm fa fa-plus float-right" style="float: right;">Add project</button></a>
                </div>Project List
               <!--  <small>Hi, <?php// if(isset($_SESSION['username'])){echo $_SESSION['username'];}else{//header("Location: login-form.php");}?>. Welcome back!</small> -->
             </h3>
@@ -77,33 +77,22 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                                     </table>
                                  </div>      
                               </div></a>
-                              <div class="row">
+                              <div class="row"style="display: flex;align-items: center;">
                                <div class="col-md-6">
                                   <div class=" text-left">
                                   <div class="form-group">
-                                    <?php if (!empty($msg)): ?>
-                                    <div class="alert <?php echo $msg_class ?>" role="alert">
-                                       <?php echo $msg; ?>
-                                    </div>
-                                      <?php endif; ?>
-                                      <?php if (!empty($error)): ?>
-                                    <div class="alert <?php echo $msg_class ?>" role="alert">
-                                          <?php echo $error; ?>
-                                    </div>
-                                      <?php endif; ?>
-                                    <div class="form-group" style="position: relative;" >
+                                    <div style="position: relative;" >
                                     <span class="img-div">
                                      <div class="text-center img-placeholder"  onClick="triggerClick()">
                                       </div>
-                                     <img src="<?php if(isset($project_photo)){echo $project_photo;}
-                                     else{ echo 'no-image.png'; }?>" width="100" height="100" alt=""  id="profileDisplay">
+                                     <img src="<?php if(isset($project_photo)){echo 'app/img/user/'. $project_photo;}else{ echo 'app/img/user/'.'avthar.jpg'; }?>" width="100" height="100" alt="ptoject Image"  id="profileDisplay">
                                       </span>      
                                      </div>
                                   </div>
                                 </div>
                                 </div>
                               <div class="col-md-6">
-                                 <div class="pull-right b-0">
+                                 <div class="pull-right">
                                  <!--  <button><em class="fa fa-phone-square" ></em></button> -->&nbsp;&nbsp;&nbsp;
                                  <a href="<?php echo 'create-update-dashboard.php?edit='.
                             $project_id.'' ?>"><button class="btn btn-purple"><em class="fa fa-plus"></em></button></a>  
@@ -113,31 +102,12 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                     </div>
                   </div>
                 </div>
-                  <!-- START chart-->
-                  
-               <!-- END dashboard sidebar-->
-           
-        
-         <?php 
-          }  
-         ?>
-         </div>
-          </div>
-          <style type="text/css">
-            .back-to-top {
-        position: fixed;
-        display: none;
-        background: #50d8af;
-        color: #fff;
-        padding: 6px 12px 9px 12px;
-        font-size: 16px;
-        border-radius: 2px;
-        right: 15px;
-        bottom: 15px;
-        transition: background 0.5s;
-        }
-          </style>
-          <a href="#" class="back-to-top" style="display: inline;"><i class="fa fa-chevron-up"></i></a>
+               <?php 
+                }  
+              ?>
+              </div>
+                </div>
+         
          <!-- END Page content-->
       </section>
       <!-- END Main section-->
