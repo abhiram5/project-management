@@ -73,15 +73,15 @@ if(isset($_POST['update_post']))
                         <!-- START widget-->
                                 <div class="form-group">
                                     <label for="name">Name <strong style="font-size: 18px;color: red;">*</strong> :</label>
-                                    <input type="text" name="name" id="" class="form-control" value="<?php  echo $name; ?>" aria-describedby="helpId">
+                                    <input type="text" data-parsley-maxlength="15" name="name" id="" class="form-control" value="<?php  echo $name; ?>" aria-describedby="helpId">
                                 </div>
                                 <div class="form-group">
                                     <label for="username">Username <strong style="font-size: 18px;color: red;">*</strong> :</label>
-                                    <input type="text" name="username" id="" class="form-control" value="<?php  echo $username; ?>" aria-describedby="helpId">
+                                    <input type="text" data-parsley-maxlength="10" name="username" id="" class="form-control" value="<?php  echo $username; ?>" aria-describedby="helpId">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password <strong style="font-size: 18px;color: red;">*</strong> :</label>
-                                    <input type="password" name="password" id="password" class="form-control" value="<?php echo $password;?>" aria-describedby="helpId" required="password">
+                                    <input type="password" data-parsley-maxlength="10" name="password" id="password" class="form-control" value="<?php echo $password;?>" aria-describedby="helpId" required="password">
                                 </div>
                                 <div><label>Role : <strong style="font-size: 18px;color: red;">*</strong>:</label>
                             </div>

@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     else 
     {
     $err="Your Login Name or Password is invalid";
-    header("location: login.php");
+    
     }
   
   

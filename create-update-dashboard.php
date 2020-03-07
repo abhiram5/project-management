@@ -94,7 +94,7 @@ if(isset($_GET['edit']))
             {
               
              $query="insert into expense(project_id,expense_type,expense,date,expense_photo,expense_note) values('$project_id','$Category_name','$Amount','$date','$profileImageName','$Notes')";
-        
+                 
             }
           if(mysqli_query($connection, $query))
           {
