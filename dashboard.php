@@ -93,7 +93,7 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                                     <span class="img-div">
                                      <div class="text-center img-placeholder"  onClick="triggerClick()">
                                       </div>
-                                     <img src="<?php if(isset($project_photo)){echo 'app/img/user/'. $project_photo;}else{ echo 'app/img/user/'.'no-image.png'; }?>" width="100" height="100" alt="ptoject Image"  id="profileDisplay">
+                                     <img src="<?php if(isset($project_photo)){echo  $project_photo;}else{ echo 'app/img/user/'.'no-image.png'; }?>" width="100" height="100" alt="ptoject Image"  id="profileDisplay">
                                       </span>      
                                      </div>
                                   </div>

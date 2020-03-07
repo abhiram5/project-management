@@ -291,13 +291,13 @@ else{
 
 
 // 
-$(document).ready(function() {
-        $.validator.addMethod("end", function(value, element) {
-            var startDate = $('start').val();
-            return Date.parse(startDate) <= Date.parse(value) || value == "";
-        }, "* End date must be after start date");
-        $('#form').validate();
-    });
+// $(document).ready(function() {
+//         $.validator.addMethod("end", function(value, element) {
+//             var startDate = $('start').val();
+//             return Date.parse(startDate) <= Date.parse(value) || value == "";
+//         }, "* End date must be after start date");
+//         $('#form').validate();
+//     });
 
  </script>
 
