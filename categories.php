@@ -1,12 +1,24 @@
 <?php
 include "header.php";
 include "left-navbar.php";
-$redirect ="dashboard.php";
+$redirect ="categorylist.php";
 if(isset($_GET['from']))
 {
 
 	$redirect = $_GET['from'];
 }
+if(isset($_GET['edit']))
+    {
+      $expense_type_Id=$_GET['edit'];
+      $query="SELECT expense_type FROM expense_type where expense_type_id = $expense_type_Id";
+     
+      $select_query = mysqli_query($connection,$query);
+      
+      while($row = mysqli_fetch_assoc($select_query))
+      {
+       $expense_Type=$row['expense_type'];
+      }
+    }
 if(isset($_POST['Category']))
     {
       $ExpenseCategorytype=$_POST['ExpenseCategorytype'];
@@ -53,6 +65,7 @@ if(isset($_POST['Category']))
       
     }
    
+    
 ?>
 
 <section>
@@ -75,7 +88,7 @@ if(isset($_POST['Category']))
                         	<?php } ?>
                            <div class="form-group">
                               <label class="control-label">Expense Category type <strong style="font-size:18px;color:red;">*</strong>:</label>
-                             <input type="text" placeholder="Enter Expense Category type" class="form-control" required name="ExpenseCategorytype">
+                             <input type="text" value="<?php if(isset($expense_Type)){ echo  $expense_Type ;}?>" placeholder="Enter Expense Category type" class="form-control" required name="ExpenseCategorytype">
                            </div>
                      	</div>
                      	<div class="panel-footer">	

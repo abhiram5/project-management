@@ -1,5 +1,5 @@
 <?php
-$connection = mysqli_connect("localhost","root","","new project");
+$connection = mysqli_connect("localhost","root","","vjp");
 //include "session.php";
  ob_start();?>
 <!DOCTYPE html>
@@ -45,7 +45,7 @@ $connection = mysqli_connect("localhost","root","","new project");
    <script src="vendor/modernizr/modernizr.custom.js" type="application/javascript"></script>
    <!-- FastClick for mobiles-->
    <script src="vendor/fastclick/lib/fastclick.js" type="application/javascript"></script>
-  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    
    
 </head>
@@ -58,7 +58,7 @@ $connection = mysqli_connect("localhost","root","","new project");
          <div class="navbar-header">
             <a href="dashboard.php" class="navbar-brand">
                <div class="brand-logo">
-                  <img src="app/img/sixthblock2.png" alt="App Logo" class="img-responsive">
+                  <img src="app/img/projectmgntLogo.png" alt="App Logo" class="img-responsive" style="height: 41px;width: 214px;padding-left: 22px;padding-right: -18px;">
                </div>
                <div class="brand-logo-collapsed">
                   <img src="app/img/sms.png" alt="App Logo" class="img-responsive">
@@ -80,47 +80,7 @@ $connection = mysqli_connect("localhost","root","","new project");
                      <em class="fa fa-navicon"></em>
                   </a>
                </li>
-               <!-- START Messages menu (dropdown-list)-->
-              
-               <!-- END Messages menu (dropdown-list)-->
-               <!-- START User avatar toggle-->
-               <li>
-                  <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-                  <a href="#" data-toggle-state="aside-user">
-                     <em class="fa fa-user"></em>
-                  </a>
-               </li>
-               <!-- END User avatar toggle-->
             </ul>
-            <!-- END Left navbar-->
-            <!-- START Right Navbar-->
-            <ul class="nav navbar-nav navbar-right">
-               <!-- Search icon-->
-               <!-- Fullscreen-->
-               <li>
-                  <a href="#" data-toggle="fullscreen">
-                     <em class="fa fa-expand"></em>
-                  </a>
-               </li>
-               <!-- START Alert menu-->
-               <!-- END Alert menu-->
-               <!-- START Contacts button-->
-               
-               <!-- END Contacts menu-->
-            </ul>
-            <!-- END Right Navbar-->
          </div>
-         <!-- END Nav wrapper-->
-         <!-- START Search form-->
-         <form role="search" action="search.html" class="navbar-form">
-            <div class="form-group has-feedback">
-               <input type="text" placeholder="Type and hit Enter.." class="form-control">
-               <div data-toggle="navbar-search-dismiss" class="fa fa-times form-control-feedback"></div>
-            </div>
-            <button type="submit" class="hidden btn btn-default">Submit</button>
-         </form>
-         <!-- END Search form-->
-      </nav>
-      <!-- END Top Navbar-->
-      <!-- START aside-->
+      </nav> 
       
