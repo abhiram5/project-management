@@ -1357,7 +1357,7 @@ fieldset[disabled] .btn-pink.focus {
 }
 .panel-dark > .panel-heading {
   color: #fff;
-  background-color: #307b61;
+  background-color: #fff; 
   border-color: #3a3f51;
 }
 .panel-dark > .panel-heading + .panel-collapse > .panel-body {

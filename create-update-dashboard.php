@@ -45,19 +45,18 @@ if(isset($_GET['edit']))
       $Amount=$row['expense'];
       $Category=$row['expense_type']; 
       $Notes=$row['expense_note'];
-      $date = date("d-m-Y",strtotime($row['date']));
+      $date = date("d/m/Y",strtotime($row['date']));
 
        }
    }
                 
   if(isset($_POST['Submit']))
   {
-    $Image=$_POST['Image'];
+    // $Image=$_POST['Image'];
     $Amount=$_POST['Amount'];
     $Category=$_POST['Category']; 
     $Notes=$_POST['Notes'];
-    $date = date('d/m/Y');
-
+    $date = date('m/d/Y');
   $query="SELECT expense_type FROM expense_type where expense_type_id = $Category";
   $expense_type_results = mysqli_query($connection,$query);  
 
@@ -95,6 +94,7 @@ if(isset($_GET['edit']))
             {
               
              $query="insert into expense(project_id,expense_type,expense,date,expense_photo,expense_note) values('$project_id','$Category_name','$Amount','$date','$profileImageName','$Notes')";
+        
             }
           if(mysqli_query($connection, $query))
           {
@@ -152,7 +152,7 @@ if(isset($_GET['edit']))
          <div class="content-wrapper">
           <h3>
                <div class="pull-right text-center">
-                 
+               <a href="project-view.php?edit=<?php echo $project_id ;?>" ><button type="button"  class="btn btn-danger  btn-sm fa fa-arrow-left float-right" style="float: right;">Go Back</button></a>
                </div>Expenses
                <!-- <small>Hi, <?php //if(isset($_SESSION['username'])){echo $_SESSION['username'];}else{//header("Location: login-form.php");}?>. Welcome back!</small> -->
             </h3>
@@ -239,7 +239,7 @@ if(isset($_GET['edit']))
                     </div>
                            <div class="col-md-6">
                                <label class="control-label">Amount :</label>
-                              <input type="text" name="Amount" value="<?php if(isset($Amount)){ echo  $Amount ;}?>" required class="form-control">
+                              <input type="number" min="1" name="Amount" value="<?php if(isset($Amount)){ echo  $Amount ;}?>" required class="form-control">
                             <div class="form-group">
                               <label class="control-label">Category : </label>
                               <?php
@@ -248,7 +248,7 @@ if(isset($_GET['edit']))
                                                           
                               echo "<select required name = 'Category' class = 'form-control' >";
 
-                              echo "<option value=''>Select teacher name</option>";
+                              echo "<option value=''>Select Category</option>";
                                 while($select_query_array = mysqli_fetch_assoc($select_query_run))
                               {
                                 $selected='';

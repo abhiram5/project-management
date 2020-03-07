@@ -7,9 +7,9 @@ include "left-navbar.php";
          <div class="content-wrapper">
             <h3>
                 <div class="pull-right text-center">
-                 <a href="create-pro.php" ><button type="button"  class="btn btn-primary  btn-sm fa fa-plus float-right" style="float: right;">Add project</button></a>
+                 <a href="create_project.php" ><button type="button"  class="btn btn-primary  btn-sm fa fa-plus float-right" style="float: right;">Add project</button></a>
                </div>Project List
-              <!--  <small>Hi, <?php// if(isset($_SESSION['username'])){echo $_SESSION['username'];}else{//header("Location: login-form.php");}?>. Welcome back!</small> -->
+               <small>Hi, <?php if(isset($_SESSION['login_user'])){echo $_SESSION['login_user'];}else{ header("Location: login.php");}?>. Welcome back!</small>
             </h3>
 <?php
 $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget,contract_price,project_photo,progress
@@ -27,7 +27,7 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                         {
                          $project_id = $row['project_id'];
                         $project_name = $row['project_name'];
-                        $expense = $row['expense'];
+                        // $expense = $row['expense'];
                         $cost_budget = $row['cost_budget'];
                         $date_start = $row['date_start'];
                         $newDate_event = date("M-Y", strtotime($date_start));
@@ -36,7 +36,15 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                         $contract_price=$row['contract_price']; 
                         $project_photo = $row['project_photo'];
                         $progress = $row['progress'];
-                    ?>
+                   
+                      $query = "SELECT SUM(expense) AS total FROM `expense` WHERE project_id = $project_id";
+                      $select_expense = mysqli_query($connection,$query);  
+
+                    while($row = mysqli_fetch_assoc($select_expense))
+                        {
+                        $total = $row['total'];
+                      }
+                      ?>
                      <div class="col-md-4" style="height: 300px">
                         <!-- START widget-->
                         <div data-toggle="play-animation" data-play="fadeInLeft" data-offset="0" data-delay="100" class="panel widget">
@@ -63,7 +71,7 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                                         <tbody>
                                            <tr style="color: red;">
                                               <td><strong>Expences  :</strong>&nbsp;&nbsp;&nbsp;</td>
-                                              <td class="text-left"><?php if(isset($expense)){echo $expense;}?></td> 
+                                              <td class="text-left"><?php if(isset($total)){echo $total;}?></td> 
                                             </tr>
                                             <tr>
                                               <td><strong>Cost :</strong>&nbsp;&nbsp;&nbsp;</td>
@@ -85,7 +93,7 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                                     <span class="img-div">
                                      <div class="text-center img-placeholder"  onClick="triggerClick()">
                                       </div>
-                                     <img src="<?php if(isset($project_photo)){echo 'app/img/user/'. $project_photo;}else{ echo 'app/img/user/'.'avthar.jpg'; }?>" width="100" height="100" alt="ptoject Image"  id="profileDisplay">
+                                     <img src="<?php if(isset($project_photo)){echo 'app/img/user/'. $project_photo;}else{ echo 'app/img/user/'.'no-image.png'; }?>" width="100" height="100" alt="ptoject Image"  id="profileDisplay">
                                       </span>      
                                      </div>
                                   </div>

@@ -85,13 +85,13 @@ if(isset($_GET['edit']))
                                       </thead>
                                       <tbody>
                                       <?php 
-                                          $query = "SELECT expense_id,date,expense_type,expense FROM `expense` where project_id = $project_id";
+                                          $query = "SELECT expense_id,created_date,expense_type,expense FROM `expense` where project_id = $project_id";
                                           $select_expense = mysqli_query($connection,$query);  
 
                                         while($row = mysqli_fetch_assoc($select_expense))
                                             {
                                             $expense_id = $row['expense_id'];
-                                            $date = $row['date'];
+                                            $date = $row['created_date'];
                                             $newDate = date("M-Y", strtotime($date));
                                             $expense = $row['expense'];
                                             $expense_type = $row['expense_type'];
