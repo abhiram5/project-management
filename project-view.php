@@ -8,7 +8,7 @@ include "left-navbar.php";
             <h3>
                <div class="pull-right text-center">
                  <a href="dashboard.php" ><button type="button"  class="btn btn-danger  btn-sm fa fa-arrow-left float-right" style="float: right;">  Go Back</button></a>
-               </div>Project List
+               </div>Project Expense List
                <!-- <small>Hi, <?php //if(isset($_SESSION['username'])){echo $_SESSION['username'];}else{//header("Location: login-form.php");}?>. Welcome back!</small> -->
             </h3>
 <?php
@@ -58,19 +58,19 @@ if(isset($_GET['edit']))
                                           </div>
                                   <br><br>
                                 </div>
-                                  <div class="col-md-4 text-right" style="text-align: -webkit-center;">
+                                  <div class="col-md-4 text-right">
                                       <table>
                                         <tbody>
                                            <tr  style="color: red;">
-                                              <td><strong>Expences  :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td><strong>Expenses  :</strong>&nbsp;&nbsp;&nbsp;</td>
                                               <td class="text-left"><?php if(isset($total)){echo $total;}?></td> 
                                             </tr>
                                             <tr>
-                                              <td><strong>Cost &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td><strong>Cost :</strong>&nbsp;&nbsp;&nbsp;</td>
                                               <td class="text-left"> <?php if(isset($cost_budget)){echo $cost_budget;}?></td>
                                                </tr>
                                               <tr>
-                                              <td><strong>Contract :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td><strong>Contract  :</strong>&nbsp;&nbsp;&nbsp;</td>
                                                 <td class="text-left"><?php if(isset($contract_price)){echo $contract_price;}?></td>
                                           </tr>
                                       </tbody>

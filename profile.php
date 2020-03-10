@@ -83,7 +83,7 @@ if(isset($_POST['update_post']))
                                     <label for="password">Password <strong style="font-size: 18px;color: red;">*</strong> :</label>
                                     <input type="password" data-parsley-maxlength="10" name="password" id="password" class="form-control" value="<?php echo $password;?>" aria-describedby="helpId" required="password">
                                 </div>
-                                <div><label>Role : <strong style="font-size: 18px;color: red;">*</strong>:</label>
+                                <div><label>Role <strong style="font-size: 18px;color: red;">*</strong>:</label>
                             </div>
                               <div class="custom-control custom-radio">
                              <input <?php if ($role == 'admin') echo 'checked="checked"'; ?> type="radio" class="custom-control-input" id="defaultUnchecked" name="role" value="admin">

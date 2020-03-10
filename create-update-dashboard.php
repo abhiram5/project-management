@@ -57,7 +57,7 @@ if(isset($_GET['edit']))
 
  while($row = mysqli_fetch_assoc($select_expense))
      {
-     $total = $row['total'];
+     $total = $row['total']?$row['total']:0;
    }          
   if(isset($_POST['Submit']))
   {

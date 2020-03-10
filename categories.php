@@ -11,6 +11,7 @@ if(isset($_GET['from']))
 if(isset($_GET['edit']))
     {
       $Name='Update ';
+      $NUM=1;
       $expense_type_Id=$_GET['edit'];
       $query="SELECT expense_type FROM expense_type where expense_type_id = $expense_type_Id";
      
@@ -39,29 +40,58 @@ if(isset($_POST['Category']))
         }
         else
         {
-          $query="insert into expense_type(expense_type) values('$ExpenseCategorytype')";
-          $insert_query = mysqli_query($connection,$query);
-          if(!$insert_query)
-            {
-
-          die("query faild..".mysqli_error($connection));
-          }
-          else
+          if($NUM==1)
           {
-          	$CategoryTypeMessage=$ExpenseCategorytype.' Added successfully';
-
-                          if(!empty($CategoryTypeMessage))
-                          { ?>
-                             <div class="alert alert-success alert-dismissable">
-                           <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button> 
-                            <?php  echo "<center> $CategoryTypeMessage </center>"; 
-                           ?> 
-                        </div>
-                        <?php
-                          }
-                       
-		    header("Location: $redirect ");
+            $query="update expense_type set expense_type='$ExpenseCategorytype' where expense_type_id = $expense_type_Id";
+            $insert_query = mysqli_query($connection,$query);
+            if(!$insert_query)
+              {
+  
+            die("query faild..".mysqli_error($connection));
+            }
+            else
+            {
+              $CategoryTypeMessage=$ExpenseCategorytype.' updated successfully';
+  
+                            if(!empty($CategoryTypeMessage))
+                            { ?>
+                               <div class="alert alert-success alert-dismissable">
+                             <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button> 
+                              <?php  echo "<center> $CategoryTypeMessage </center>"; 
+                             ?> 
+                          </div>
+                          <?php
+                            }
+                         
+          header("Location: $redirect ");
+            }
           }
+          else{
+            $query="insert into expense_type(expense_type) values('$ExpenseCategorytype')";
+            $insert_query = mysqli_query($connection,$query);
+            if(!$insert_query)
+              {
+  
+            die("query faild..".mysqli_error($connection));
+            }
+            else
+            {
+              $CategoryTypeMessage=$ExpenseCategorytype.' Added successfully';
+  
+                            if(!empty($CategoryTypeMessage))
+                            { ?>
+                               <div class="alert alert-success alert-dismissable">
+                             <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button> 
+                              <?php  echo "<center> $CategoryTypeMessage </center>"; 
+                             ?> 
+                          </div>
+                          <?php
+                            }
+                         
+          header("Location: $redirect ");
+            }
+          }
+          
           
         }
       

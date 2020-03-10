@@ -8,7 +8,7 @@ include "left-navbar.php";
             <h3>
                 <div class="pull-right text-center">
                  <a href="create_project.php" ><button type="button"  class="btn btn-primary  btn-sm fa fa-plus float-right" style="float: right;">Add project</button></a>
-               </div>Project List
+               </div>Projects List
                <small>Hi, <?php if(isset($_SESSION['login_user'])){echo $_SESSION['login_user'];}else{ header("Location: login.php");}?>. Welcome back!</small>
             </h3>
 <?php
@@ -27,7 +27,6 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                         {
                          $project_id = $row['project_id'];
                         $project_name = $row['project_name'];
-                        // $expense = $row['expense'];
                         $cost_budget = $row['cost_budget'];
                         $date_start = $row['date_start'];
                         $newDate_event = date("M-Y", strtotime($date_start));
@@ -70,7 +69,7 @@ $query = "SELECT project_id,project_name,expense,date_start,date_end,cost_budget
                                       <table>
                                         <tbody>
                                            <tr style="color: red;">
-                                              <td><strong>Expences  :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td><strong>Expenses  :</strong>&nbsp;&nbsp;&nbsp;</td>
                                               <td class="text-left"><?php if(isset($total)){echo $total;}?></td> 
                                             </tr>
                                             <tr>
