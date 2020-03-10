@@ -1,5 +1,6 @@
 <?php
-$connection = mysqli_connect("localhost","root","","vjp");
+include "dbcon.php";
+// $connection = mysqli_connect("localhost","root","","vjp");
 //include "session.php";
  ob_start();?>
 <!DOCTYPE html>
@@ -81,6 +82,15 @@ $connection = mysqli_connect("localhost","root","","vjp");
                      <em class="fa fa-navicon"></em>
                   </a>
                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+               <!-- Search icon-->
+               <li class="active">
+                  <a href="logout.php" title="Logout" data-toggle="" style="color:azure" class="no-submenu">
+                     <em class="fa fa-sign-out"></em>
+                     <span class="item-text">Logout</span>
+                  </a>
+                  </li>
             </ul>
          </div>
       </nav> 

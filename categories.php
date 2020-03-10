@@ -1,6 +1,7 @@
 <?php
 include "header.php";
 include "left-navbar.php";
+$Name='Create ';
 $redirect ="categorylist.php";
 if(isset($_GET['from']))
 {
@@ -9,6 +10,7 @@ if(isset($_GET['from']))
 }
 if(isset($_GET['edit']))
     {
+      $Name='Update ';
       $expense_type_Id=$_GET['edit'];
       $query="SELECT expense_type FROM expense_type where expense_type_id = $expense_type_Id";
      
@@ -71,7 +73,7 @@ if(isset($_POST['Category']))
 <section>
 	<div class="content-wrapper">
             <h3>
-               Create Category
+               <?php echo $Name ; ?>Category
             </h3>
             <div class="row">
                 <div class="col-lg-6">
