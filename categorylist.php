@@ -12,7 +12,7 @@ include "left-navbar.php";
                <div class="col-lg-12">
                   <div class="panel panel-default">
                      <div class="panel-heading">
-                       Categories
+                       <!-- Categories -->
                      </div>
                      <div class="panel-body">
                         <table id="datatable1" class="table table-striped table-hover">
@@ -25,7 +25,7 @@ include "left-navbar.php";
                            </thead>
                            <tbody>
                                <?php
-                               $query = "SELECT * FROM expense_type";
+                               $query = "SELECT * FROM expense_type order BY expense_type_id DESC";
   
                                $select_project = mysqli_query($connection,$query);  
                                $index=1;

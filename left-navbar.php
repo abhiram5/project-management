@@ -1,5 +1,5 @@
 <?php 
-include "header.php";
+include "dbcon.php";
 include "session.php";
 ?>
 
@@ -24,13 +24,13 @@ include "session.php";
                         </a>
                   </li>
                   <li class="active">
-                  <a href="dashboard.php" title="Events" data-toggle="" class="no-submenu">
+                  <a href="dashboard.php" title="Projects" data-toggle="" class="no-submenu">
                      <em class="fa fa-calendar"></em>
                      <span class="item-text">Projects</span>
                   </a>
                   </li>
                   <li class="active">
-                  <a href="categorylist.php" title="Classes" data-toggle="" class="no-submenu">
+                  <a href="categorylist.php" title="Expense Categories" data-toggle="" class="no-submenu">
                      <em class="fa fa-list"></em>
                      <span class="item-text">Expense Categories</span>
                   </a>
@@ -41,14 +41,7 @@ include "session.php";
                      <span class="item-text">Profile</span>
                   </a>
                   </li>
-                 <li class="active">
-                  <a href="logout.php" title="Profile" data-toggle="" class="no-submenu">
-                     <em class="fa fa-sign-out"></em>
-                     <span class="item-text">Logout</span>
-                  </a>
-                  </li>
-               
-            </ul>
+                  </ul>
          </nav>
          <!-- END Sidebar (left)-->
       </aside>

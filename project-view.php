@@ -7,8 +7,8 @@ include "left-navbar.php";
         <div class="content-wrapper">
             <h3>
                <div class="pull-right text-center">
-                 <a href="dashboard.php" ><button type="button"  class="btn btn-danger  btn-sm fa fa-arrow-left float-right" style="float: right;">Go Back</button></a>
-               </div>Project List
+                 <a href="dashboard.php" ><button type="button"  class="btn btn-danger  btn-sm fa fa-arrow-left float-right" style="float: right;">  Go Back</button></a>
+               </div>Project Expense List
                <!-- <small>Hi, <?php //if(isset($_SESSION['username'])){echo $_SESSION['username'];}else{//header("Location: login-form.php");}?>. Welcome back!</small> -->
             </h3>
 <?php
@@ -30,7 +30,14 @@ if(isset($_GET['edit']))
         $contract_price=$row['contract_price']; 
         $project_photo = $row['project_photo'];
         $progress = $row['progress'];
+         
+        $query = "SELECT SUM(expense) AS total FROM `expense` WHERE project_id = $project_id";
+        $select_expense = mysqli_query($connection,$query);  
 
+      while($row = mysqli_fetch_assoc($select_expense))
+          {
+          $total = $row['total']?$row['total']:0;
+        }
        }
        
           } 
@@ -51,19 +58,19 @@ if(isset($_GET['edit']))
                                           </div>
                                   <br><br>
                                 </div>
-                                  <div class="col-md-4 text-right" style="text-align: -webkit-center;">
+                                  <div class="col-md-4 text-right">
                                       <table>
                                         <tbody>
                                            <tr  style="color: red;">
-                                              <td><strong>Expences  :</strong>&nbsp;&nbsp;&nbsp;</td>
-                                              <td class="text-left"><?php if(isset($expense)){echo $expense;}?></td> 
+                                              <td><strong>Expenses  :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td class="text-left"><?php if(isset($total)){echo $total;}?></td> 
                                             </tr>
                                             <tr>
-                                              <td><strong>Cost &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td><strong>Cost :</strong>&nbsp;&nbsp;&nbsp;</td>
                                               <td class="text-left"> <?php if(isset($cost_budget)){echo $cost_budget;}?></td>
                                                </tr>
                                               <tr>
-                                              <td><strong>Contract :</strong>&nbsp;&nbsp;&nbsp;</td>
+                                              <td><strong>Contract  :</strong>&nbsp;&nbsp;&nbsp;</td>
                                                 <td class="text-left"><?php if(isset($contract_price)){echo $contract_price;}?></td>
                                           </tr>
                                       </tbody>
@@ -85,7 +92,7 @@ if(isset($_GET['edit']))
                                       </thead>
                                       <tbody>
                                       <?php 
-                                          $query = "SELECT expense_id,date,expense_type,expense FROM `expense` where project_id = $project_id";
+                                          $query = "SELECT expense_id,date,expense_type,expense FROM `expense` where project_id = $project_id order BY expense_id DESC";
                                           $select_expense = mysqli_query($connection,$query);  
 
                                         while($row = mysqli_fetch_assoc($select_expense))

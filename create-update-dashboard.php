@@ -6,9 +6,11 @@ include "left-navbar.php";
 
 $num ='';
 $check ='';
+$Name='Create ';
 $CategoryTypeErrorMessage='';
 if(isset($_GET['edit']))
 {    
+  
     $project_id =$_GET['edit'];
     $query = "SELECT * FROM project where project_id = $project_id";
    
@@ -17,7 +19,7 @@ if(isset($_GET['edit']))
      while($row = mysqli_fetch_assoc($select_project))
         {
         $project_name = $row['project_name'];
-        $expense = $row['expense'];
+        //$expense = $row['expense'];
         $cost_budget = $row['cost_budget'];
         $date_start = $row['date_start'];
         $newDate_event = date("M-Y", strtotime($date_start));
@@ -32,6 +34,7 @@ if(isset($_GET['edit']))
    if(isset($_GET['edit_category']))
 {    
   $num = 1;
+  $Name='Update ';
     $expense_id =$_GET['edit_category'];
 
     $query = "SELECT * FROM expense where expense_id = $expense_id";
@@ -45,11 +48,17 @@ if(isset($_GET['edit']))
       $Amount=$row['expense'];
       $Category=$row['expense_type']; 
       $Notes=$row['expense_note'];
-      $date = date("d/m/Y",strtotime($row['date']));
+      $date = date("m/d/Y",strtotime($row['date']));
 
        }
    }
-                
+   $query = "SELECT SUM(expense) AS total FROM `expense` WHERE project_id = $project_id";
+   $select_expense = mysqli_query($connection,$query);  
+
+ while($row = mysqli_fetch_assoc($select_expense))
+     {
+     $total = $row['total']?$row['total']:0;
+   }          
   if(isset($_POST['Submit']))
   {
     // $Image=$_POST['Image'];
@@ -72,7 +81,8 @@ if(isset($_GET['edit']))
       $path=$_FILES['Image']['name']; 
       $ext = pathinfo($path, PATHINFO_EXTENSION);
       $profileImageName =  time().$project_name.'.'.$ext;
-      $target_dir = "app/img/user/";
+      //$target_dir = "app/img/user/";
+      $target_dir="uploads/";
       $target_file = $target_dir . basename($profileImageName);
       // echo $target_file;
       // exit();
@@ -153,7 +163,7 @@ if(isset($_GET['edit']))
           <h3>
                <div class="pull-right text-center">
                <a href="project-view.php?edit=<?php echo $project_id ;?>" ><button type="button"  class="btn btn-danger  btn-sm fa fa-arrow-left float-right" style="float: right;">Go Back</button></a>
-               </div>Expenses
+               </div> <?php echo $Name ;?>Expenses
                <!-- <small>Hi, <?php //if(isset($_SESSION['username'])){echo $_SESSION['username'];}else{//header("Location: login-form.php");}?>. Welcome back!</small> -->
             </h3>
             <!-- START row-->
@@ -175,7 +185,7 @@ if(isset($_GET['edit']))
                                         <tbody>
                                            <tr  style="color: red;">
                                               <td><strong>Expences  :</strong>&nbsp;&nbsp;&nbsp;</td>
-                                              <td class="text-left"><?php if(isset($expense)){echo $expense;}?></td> 
+                                              <td class="text-left"><?php if(isset($total)){echo $total;}?></td> 
                                             </tr>
                                             <tr>
                                               <td><strong>Cost :</strong>&nbsp;&nbsp;&nbsp;</td>
@@ -201,7 +211,7 @@ if(isset($_GET['edit']))
                             </div>  
                         </div>
                       <div class="row">
-                       <form method="post" enctype="multipart/form-data">
+                       <form method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
                          <div class="col-md-6">
                           <label class="control-label"><?php if(isset($date)){ echo $date ;}?></label>
                             <div class="form-group">
@@ -224,13 +234,13 @@ if(isset($_GET['edit']))
                                       if($num == 1)
                                       {
                                          ?>
-                                         <img src="<?php if( $Image){ echo 'app/img/user/' . $Image;}else { echo 'app/img/user/' .'avatar.jpg';}?>" width="150" height="150" alt="picture" onClick="triggerClick()" id="profileDisplay">
+                                         <img src="<?php if($Image){ echo "uploads/" . $Image;}else { echo 'uploads/' .'avatar.jpg';}?>" width="150" height="150" alt="picture" onClick="triggerClick()" id="profileDisplay">
                                           <?php 
                                       }
                                       else
                                       {
                                       ?>
-                                     <img src="<?php  echo 'app/img/user/' .'avatar.jpg';?>" width="150" height="150" alt="" onClick="triggerClick()" id="profileDisplay">
+                                     <img src="<?php  echo 'uploads/' .'avatar.jpg';?>" width="150" height="150" alt="" onClick="triggerClick()" id="profileDisplay">
                                    <?php } ?>
                                 </span>       
                              <input type="file" name="Image" onChange="displayImage(this)" id="profileImage" value="<?php echo  $Image; ?>" class="form-control" style="display: none;">   
@@ -239,7 +249,7 @@ if(isset($_GET['edit']))
                     </div>
                            <div class="col-md-6">
                                <label class="control-label">Amount :</label>
-                              <input type="number" min="1" name="Amount" value="<?php if(isset($Amount)){ echo  $Amount ;}?>" required class="form-control">
+                              <input type="number" min="1" step="any" name="Amount" value="<?php if(isset($Amount)){ echo  $Amount ;}?>" required class="form-control">
                             <div class="form-group">
                               <label class="control-label">Category : </label>
                               <?php

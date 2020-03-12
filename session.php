@@ -5,10 +5,12 @@ session_start();
 {
 	$name=$_SESSION['login_user'];
 	$user_id=$_SESSION['userid'];
-   $role_id = $_SESSION['role_id'];
+
                      
 }
 else
 {
+	//   echo "hello";
+   //     exit();
 header("Location: login.php");
 }?>

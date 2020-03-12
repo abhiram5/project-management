@@ -15,7 +15,8 @@ $alert="hidden";
 $status="";
 $target_file="";
 $datemsg="";
-
+$num ='';
+$Name='Create ';
 if(isset($_POST['submit'])){
             $projectName=$_POST['projectName'];
             $dateStart=$_POST['dateStart'];
@@ -27,18 +28,18 @@ if(isset($_POST['submit'])){
             $progress=45;
             $phoneNumber=$_POST['phoneNumber'];
             $status=$_POST['status'];
-            
+            $created_by = $_SESSION['login_user'];
 
-            
-            
-          
-			       if($status==1){
-                $status="Active";
-                 }else{
-                $status="Inactive";
-                }
+            // if($status==1){
+            //     $status="Active";
+            //      }else{
+            //     $status="Inactive";
+            //     }
+            if($_FILES["fileToUpload"]["name"])
+            {
                 $target_dir = "uploads/";
                 $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+               
                 $uploadOk = 1;
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
                 
@@ -64,7 +65,7 @@ if(isset($_POST['submit'])){
                 
                 
                 $sql="UPDATE project SET project_name='$projectName',date_start='$startDate',date_end='$endDate',contract_price=$contractPrice,cost_budget=$costBudget,progress='$progress',phone_number=$phoneNumber,project_photo='$target_file',project_status='$status' WHERE project_id=$user_id";
- 
+           
                 if($connection->query($sql)){
                   
 					$msg="updated successfully";
@@ -79,7 +80,7 @@ if(isset($_POST['submit'])){
                  }
              }else{
                 
-                $sql ="INSERT INTO project(project_name,date_start,date_end,contract_price,cost_budget,progress,phone_number,project_photo,project_status)VALUES('$projectName','$startDate','$endDate','$contractPrice','$costBudget','$progress','$phoneNumber','$target_file','$status')";
+                $sql ="INSERT INTO project(project_name,created_by,date_start,date_end,contract_price,cost_budget,progress,phone_number,project_photo,project_status)VALUES('$projectName','$created_by','$startDate','$endDate','$contractPrice','$costBudget','$progress','$phoneNumber','$target_file','$status')";
                 
                 if($connection->query($sql)){
 				    $msg="added successfully";
@@ -95,16 +96,67 @@ if(isset($_POST['submit'])){
                   }
     
 }
-}else{
+            }
+else{
    $msg="end date should be greater than or equal to start date";
       $alert="alert alert-danger";
      }
 
 
 }
+else
+{
+   if($endDate>=$startDate){
+      if(isset($_GET['edit_project'])){ 
+     
+
+      $user_id=$_GET['edit_project'];
+      
+      
+      $sql="UPDATE project SET project_name='$projectName',date_start='$startDate',date_end='$endDate',contract_price=$contractPrice,cost_budget=$costBudget,progress='$progress',phone_number=$phoneNumber,project_status='$status' WHERE project_id=$user_id";
+ 
+      if($connection->query($sql)){
+        
+     $msg="updated successfully";
+     $alert="alert alert-success";
+  
+          echo"<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
+       }else{
+      
+          $msg="not updated successfully";
+          $alert="alert alert-danger";
+          echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
+       }
+   }else{
+      
+      $sql ="INSERT INTO project(project_name,created_by,date_start,date_end,contract_price,cost_budget,progress,phone_number,project_status)VALUES('$projectName','$created_by','$startDate','$endDate','$contractPrice','$costBudget','$progress','$phoneNumber','$status')";
+      
+      if($connection->query($sql)){
+      $msg="added successfully";
+      $alert="alert alert-success";
+     
+        echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
+
+       } 
+     else {
+          $msg="not added successfully";
+          $alert="alert alert-danger";
+          echo "<script>setTimeout(\"location.href = 'dashboard.php';\",1500);</script>";
+        }
+
+}
+  }
+else{
+$msg="end date should be greater than or equal to start date";
+$alert="alert alert-danger";
+}
+}
+}
 else{
     if(isset($_GET['edit_project']))
     {
+      $num = 1;
+      $Name='Update ';
         $user_id=$_GET['edit_project'];
         $view="SELECT *FROM project WHERE project_id=$user_id";
         $viewresult=mysqli_query($connection,$view);
@@ -134,7 +186,7 @@ else{
       <section>
          <!-- START Page content-->
          <div class="content-wrapper">
-            <h3>Form </h3>
+            <h3><?php echo $Name ;?>Project </h3>
             <!-- START row-->
             <div class="row">
                <div class="col-lg-6">
@@ -152,25 +204,6 @@ else{
                               <label class="control-label">Project Name<span style="color:red">*</span></label>
                               <input type="text" name="projectName" data-parsley-maxlength="20" value="<?php echo $projectName;?>" required class="form-control">
                            </div>
-                           <!-- <div class="form-group">
-                           
-						           <label class="control-label">Date Start<span style="color:red">*</span></label>
-                              <div data-format="DD/MM/YYYY" class="datetimepicker input-group date mb-lg">
-                                 <input  type="date" id="start_date" name="dateStart"  value="" class="form-control" required>
-                                 <span class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                 </span>
-                              </div>
-                           </div> -->
-                           <!-- <div class="form-group">
-						         <label class="control-label">Date End<span style="color:red">*</span></label>
-                              <div data-format="DD/MM/YYYY" class="datetimepicker input-group date mb-lg">
-                                 <input type="date" id="end_date" name="dateEnd"  value=""required class="form-control" >
-                                 <span class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                 </span>
-                              </div>
-                           </div> -->
                            <div class="form-group">
                            <label class="control-label">Start date<span style="color:red">*</span></label>
                            <input type="date"  id="start"  data-parsley-start= ''  value="<?php echo $startDate;?>" name="dateStart" required class="form-control">
@@ -181,11 +214,11 @@ else{
                            </div>
                            <div class="form-group">
                               <label class="control-label">Contract Price<span style="color:red">*</span></label>
-                              <input type="number" min="0" data-parsley-maxlength="10" oninput="validity.valid||(value='');" step="any" name="contractPrice" value="<?php echo  $contractPrice;?>" required class="form-control">
+                              <input type="number" min="1" data-parsley-maxlength="10" oninput="validity.valid||(value='');" step="any" name="contractPrice" value="<?php echo  $contractPrice;?>" required class="form-control">
                            </div>
 						          <div class="form-group">
                               <label class="control-label">Cost Budget<span style="color:red">*</span></label>
-                              <input type="number" min="0" data-parsley-maxlength="10" oninput="validity.valid||(value='');" step="any" name="costBudget"  value="<?php echo  $costBudget;?>" required class="form-control">
+                              <input type="number" min="1" data-parsley-maxlength="10" oninput="validity.valid||(value='');" step="any" name="costBudget"  value="<?php echo  $costBudget;?>" required class="form-control">
                            </div>
                            <div class="form-group">
                            <label class="control-label">Progress</label>
@@ -197,18 +230,32 @@ else{
                            </div>
 						         <div class="form-group">
                               <label class="control-label">Phone Number<span style="color:red">*</span></label>
-                              <input type="text" name="phoneNumber" data-parsley-type="digits" data-parsley-length="[10,10]" value="<?php echo $phoneNumber;?>" required class="form-control">
+                              <input type="text" name="phoneNumber" data-parsley-error-message="Enter a 10-digit phone number." data-parsley-type="digits" data-parsley-length="[10,10]" value="<?php echo $phoneNumber;?>" required class="form-control">
                            </div>
                            <div class="form-group">
                                 <label class="control-label">Project Photos</label>
-                                <input type="file"  class="form-control" name="fileToUpload" id="fileToUpload">
-                                <img src="<?php echo $target_file;?>" height=67px  >
+                                <input type="file"  class="form-control" value="<?php if(isset($target_file)){echo  $target_file;}else{ echo 'uploads/'.'no-image.png';} ?>" name="fileToUpload" id="fileToUpload">
+                                <?php 
+                                 if($num == 1)
+                                      {
+                                         ?>
+                                         <img src="<?php if($target_file){ echo $target_file;}else{echo 'uploads/'.'no-image.png';} ?>" width="150" height="150" alt="picture" onClick="triggerClick()" id="profileDisplay">
+                                          <?php 
+                                      }//<?php if($Image){ echo 'app/img/user/' . $Image;}else 
+                                 //      else
+                                 //      {
+                                 //      ?>
+                                 <!-- //     <img src="<?php  //echo 'uploads/'.'no-image.png';?>" width="150" height="150" alt="" onClick="triggerClick()" id="profileDisplay"> -->
+                                 <?php// } ?>
+                               
+                                <!-- <img src="<?php// echo $target_file;?>" height=67px  > -->
                             </div>
-						         <div class="form-group">
-                           <label class="col-sm-2 control-label">Status</label>
+                            <div class="form-group">
+                           <label class="col-sm-2 control-label">Activation</label>
                            <div class="col-sm-10">
                               <label class="switch">
-                                 <input type="checkbox"  id="status" name="status" value=1 <?php if($status=='Active'){ echo"checked";}?>>
+                                  <input type="checkbox" data-toggle="toggle" data-style="ios" id="status"
+                                     name="status" <?php if($status){echo 'checked'; }?> value=1>
                                  <span></span>
                               </label>
                            </div>
@@ -221,8 +268,18 @@ else{
                               
                                
                               <div class="pull-right">
-                              
-							     <a href="create_project.php" class="btn btn-danger">Cancel</a>
+                              <?php
+                              if($num == 1)
+                              {
+                              ?>
+                          <a href="project-view.php?edit=<?php echo $user_id ;?>" class="btn btn-danger">Cancel</a>
+                          <?php
+                           }
+                           else
+                           {
+                          ?>
+                           <a href="dashboard.php" class="btn btn-danger">Cancel</a>
+                           <?php } ?>
                                  <input type="submit"  name="submit" value="submit" class="btn btn-primary">
 								
 								 
